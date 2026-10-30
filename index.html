@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="grimcliff" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nightfall of Grimcliff</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.webmanifest">
+    <meta name="theme-color" content="#0b0a10">
+    <link rel="apple-touch-icon" href="./img/icon-192.png">
+    <link rel="icon" type="image/png" href="./img/icon-192.png">
+
+    <!-- Preconexión a Google para acelerar la carga -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Tipografías obtenidas de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=MedievalSharp&family=Cormorant:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Tema propio: declara primero el orden de capas, por eso va ANTES de DaisyUI y Tailwind -->
+    <link rel="stylesheet" href="css/tema.css" />
+
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Fuentes y SISTEMA DE COMPONENTES (todo el sitio reutiliza estas clases) -->
+    <style type="text/tailwindcss">
+        @theme {
+            --font-gothic: "UnifrakturCook", serif;
+            --font-medieval: "MedievalSharp", serif;
+            --font-body: "Cormorant", serif;
+        }
+    </style>
+</head>
+
+<body class="bg-base-100 text-base-content font-body min-h-screen flex flex-col">
+
+    <!-- ========= AVISO SIN CONEXIÓN (PWA) ========= -->
+    <div id="aviso-offline" class="hidden bg-warning text-warning-content text-center font-medieval py-2 px-4 text-sm" role="status">
+        Sin conexión: estás viendo la versión guardada.
+    </div>
+
+    <!-- ========= NAVBAR ========= -->
+    <header class="navbar bg-base-200 sticky top-0 z-50 border-b border-base-300 flex flex-wrap lg:flex-nowrap justify-between items-center gap-2">
+
+        <!-- Logo (se minimiza en teléfono) -->
+        <a href="#inicio" class="flex items-center gap-2 md:gap-3 min-w-0">
+            <img src="./img/Logo_2.png" alt="Logo de Nightfall of Grimcliff" class="h-10 w-10 md:h-9 md:w-9 shrink-0 object-contain">
+            <span class="font-gothic text-base sm:text-xl xl:text-2xl text-primary font-bold truncate">
+                Nightfall of Grimcliff
+            </span>
+        </a>
+
+        <div class="flex items-center gap-2 md:gap-4 shrink-0">
+            <!-- Menú con anclas: solo computadora -->
+            <nav class="hidden lg:flex">
+                <ul class="flex items-center gap-4 xl:gap-6 font-medieval text-base xl:text-lg">
+                    <li><a href="#personajes" data-i18n="nav_personajes" class="hover:text-primary transition-colors">Personajes</a></li>
+                    <li><a href="#mundos" data-i18n="nav_mundos" class="hover:text-primary transition-colors">Mundos</a></li>
+                    <li><a href="#manual" data-i18n="nav_manual" class="hover:text-primary transition-colors">Manual</a></li>
+                    <li><a href="#premios" data-i18n="nav_premios" class="hover:text-primary transition-colors">Premios</a></li>
+                    <li><a href="#acerca-de" data-i18n="nav_acerca" class="hover:text-primary transition-colors">Acerca De</a></li>
+                </ul>
+            </nav>
+
+            <!-- Botón de idioma -->
+            <button id="btn-idioma" class="btn btn-sm btn-outline btn-primary font-medieval min-h-11 lg:min-h-8" aria-label="Cambiar idioma">
+                ES / ENG
+            </button>
+
+            <!-- Botón hamburguesa: teléfono y tableta -->
+            <button id="btn-menu" type="button" class="btn btn-square btn-ghost lg:hidden min-h-11 min-w-11"
+                    aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
+                <svg id="ico-abrir" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg id="ico-cerrar" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+        </div>
+
+        <!-- Menú desplegable: teléfono y tableta -->
+        <nav id="menu-movil" class="hidden lg:hidden basis-full w-full border-t border-base-300 pt-2">
+            <ul class="flex flex-col font-medieval text-xl">
+                <li><a href="#personajes" data-i18n="nav_personajes" class="block py-3 px-2 min-h-12 hover:text-primary">Personajes</a></li>
+                <li><a href="#mundos" data-i18n="nav_mundos" class="block py-3 px-2 min-h-12 hover:text-primary">Mundos</a></li>
+                <li><a href="#manual" data-i18n="nav_manual" class="block py-3 px-2 min-h-12 hover:text-primary">Manual</a></li>
+                <li><a href="#premios" data-i18n="nav_premios" class="block py-3 px-2 min-h-12 hover:text-primary">Premios</a></li>
+                <li><a href="#acerca-de" data-i18n="nav_acerca" class="block py-3 px-2 min-h-12 hover:text-primary">Acerca De</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="flex-grow space-y-14 md:space-y-24 py-8 w-full">
+
+        <!-- ========= INICIO ========= -->
+        <section id="inicio" class="scroll-mt-24 space-y-6">
+
+            <!-- Banner -->
+            <div class="rounded-box overflow-hidden border border-base-300 shadow-2xl marco-brillo">
+                <img src="./img/baner_pro_1.png"
+                     alt="Kaelen frente al castillo de Grimcliff"
+                     class="w-full h-auto block"
+                     style="image-rendering: pixelated;">
+            </div>
+
+            <!-- Recuadro de vidrio: sinopsis y botones -->
+            <div class="vidrio vidrio-suave rounded-box marco-brillo">
+                <div class="p-4 sm:p-6 md:p-8 text-center space-y-6">
+
+                    <h1 class="sr-only">Nightfall of Grimcliff</h1>
+
+                    <p class="font-body text-lg md:text-xl max-w-3xl mx-auto leading-relaxed text-base-content [text-shadow:0_1px_8px_rgba(0,0,0,0.8)]">
+                        El reino ha caído bajo la tiranía del Rey Malakor el Corrupto. Toma el rol de Kaelen, un modesto cazarrecompensas que deberá adentrarse en las sombras para reclamar la mística espada <span class="font-medieval text-primary">Alborada</span> y devolver la luz al reino.
+                    </p>
+
+                    <!-- Botones del inicio: ancho completo en teléfono -->
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <a href="#descargar-apk" class="btn btn-primary btn-lg font-medieval text-lg px-8 shadow-lg w-full sm:w-auto">
+                            Descargar app (APK Android)
+                        </a>
+                        <button id="btn-pwa" type="button" class="btn btn-vidrio btn-lg font-medieval text-lg px-8 w-full sm:w-auto">
+                            Instalar PWA
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ficha técnica -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                <div class="dato bg-base-200"><span class="text-primary block">Género</span> Hack and Slash 2D</div>
+                <div class="dato bg-base-200"><span class="text-primary block">Plataforma</span> Juego: PC · App: Android</div>
+                <div class="dato bg-base-200"><span class="text-primary block">Clasificación</span> ESRB E10+</div>
+                <div class="dato bg-base-200"><span class="text-primary block">Estilo</span> Pixel Art / Spooky</div>
+            </div>
+        </section>
+
+        <!-- ========= HISTORIA Y OBJETIVO ========= -->
+        <section id="historia" class="scroll-mt-24 space-y-6">
+
+            <div class="border-t border-base-300 pt-6">
+                <p class="sec-intro font-medieval text-primary uppercase tracking-widest pt-4">
+                    — La Travesía por Grimcliff —
+                </p>
+            </div>
+
+            <div class="space-y-6 font-body">
+
+                <!-- Historia -->
+                <article class="tarjeta tarjeta-lg space-y-3">
+                    <h2 class="tarjeta-titulo cabecera text-secondary uppercase tracking-wide">Historia</h2>
+
+                    <div class="text-lg md:text-xl text-base-content/90 leading-relaxed space-y-4 text-justify hyphens-auto">
+                        <h3 class="subtitulo">Capítulo I: La Caída del Reino y el Despertar de la Venganza</h3>
+                        <p>Las runas grabadas en la roca ancestral y desgastadas por el implacable paso de los milenios ya lo habían presagiado: una sombra sin nombre se cerniría sobre las tierras de Grimcliff. Lo que las profecías no revelaron con claridad fue que la semilla de la ruina germinaría en el propio corazón de la corona. El reino, alguna vez un bastión vibrante de prosperidad y justicia, cayó trágicamente bajo el yugo de Malakor. Nacido y criado entre los muros inamovibles del castillo imperial, Malakor fue educado en la firme creencia de que su sangre divina lo situaba por encima de las penas de los mortales.</p>
+                        <p>Aunque durante las primeras décadas gobernó con benevolencia, la paranoia y el aislamiento del poder absoluto corrompieron su juicio. Asustado por la inevitable fragilidad de su vida y el declive de su imperio, pactó con las fuerzas oscuras que yacían bajo la tierra, entregando la esperanza de su pueblo para alimentar una codicia insaciable y una magia negra devastadora.</p>
+                    </div>
+
+                    <details class="group">
+                        <summary class="btn btn-outline btn-secondary font-medieval mt-2 list-none w-fit">
+                            <span class="group-open:hidden">Continuar leyendo...</span>
+                            <span class="hidden group-open:inline">Mostrar menos</span>
+                        </summary>
+
+                        <div class="text-lg md:text-xl text-base-content/90 leading-relaxed mt-4 pt-4 border-t border-base-300/50 space-y-4 text-justify hyphens-auto">
+
+                            <p>La tierra entera se sumió en un crepúsculo perpetuo. El cielo quedó cubierto por un velo purpúreo y gris que impedía el paso de los rayos del sol, y el dolor de las aldeas devastadas por los monstruos del rey resonó en cada rincón como un eco incesante de desesperación.</p>
+                            <p>En una de esas aldeas remotas intentaba rehacer su vida Kaelen. Tras una infancia miserable como huérfano en los suburbios de la capital, Kaelen había sobrevivido perfeccionando las artes del rastreo, el combate táctico y el uso de las armas como un temido cazarrecompensas en fronteras lejanas. Cansado de la violencia, había depositado sus armas para cultivar la tierra, cuidar al ganado y formar una familia en paz. Sin embargo, el destino le asestó el golpe más brutal: la campaña de erradicación de Malakor destruyó su hogar, reduciendo sus prados a cenizas y arrebatándole a sus seres amados.</p>
+                            <p>Como único sobreviviente, Kaelen desenterró sus viejas herramientas de caza. Armado inicialmente con una armadura modesta de cuero reforzado y una voluntad inquebrantable, renació no como un mercenario a sueldo, sino como el legendario Caballero del Amanecer. Decidido a arrebatarle el futuro a la tiranía, se adentró en los dominios del miedo impulsado por una sed inextinguible de justicia.</p>
+
+                            <h3 class="subtitulo">Capítulo II: Los Aliados de la Penumbra</h3>
+
+                            <p>El primer paso de su odisea lo condujo al Bosque Oscuro, un territorio inhóspito donde la vegetación marchita ocultaba hordas de criaturas corrompidas y antiguos secretos que aguardaban ser revelados. No obstante, Kaelen no estaba destinado a marchar completamente solo. En aquel sendero sumergido en la oscuridad, cruzó caminos con seres marginados y traicionados por el rey, almas nobles que habían decidido desafiar al destino.</p>
+                            <p>El primer encuentro crucial en el bosque fue con Thorne, el legendario y antiguo comandante supremo del ejército imperial. Thorne, un estratega brillante cuya lealtad a la corona había sido legendaria, había sido víctima de la traición de Malakor, quien lo envió a él y a su batallón a una emboscada suicida para erradicar cualquier oposición moral en sus filas. Con su armadura astillada, muescada por mil combates y cubierta de ceniza, recuerdo de sus hombres caídos, Thorne deambulaba como un guerrero fantasma. Al ver la determinación implacable en los ojos de Kaelen, el viejo comandante reconoció el fuego que a él le faltaba. Thorne compartió con el viajero sus técnicas de combate más feroces, enseñándole a predecir las formaciones de los esbirros, romper guardias impenetrables y soportar la fatiga en el choque de acero contra acero.</p>
+                            <p>Más adelante, en el corazón cavernoso del bosque, se hallaba la guarida oculta de Kogan. A los ojos del mundo, Kogan había sido un humilde armero de la capital que vendía dagas y escudos comunes a aventureros y soldados. En realidad, era el último heredero de un linaje extinto de herreros arcanos, capaces de canalizar la magia elemental a través del yunque. Viendo que el reino se desmoronaba y tras haber servido en sus años mozos como cazarrecompensas junto a hombres duros, Kogan decidió revelar su legado supremo. Trabajando día y noche en su forja mística, no solo reforzó la protección de Kaelen con metales arcanos resistentes a los zarpazos de las bestias, sino que le entregó la obra maestra de su vida: Alborada, una espada majestuosa cargada con la esencia mística del sol que el tirano intentaba extinguir. Al empuñarla, la luz recorrió su cuerpo y su modesto atuendo de viajero se transformó en una armadura oscura de placas, con una gran capa negra y destellos anaranjados en los hombros y las piernas. Así nació el Héroe de la Luz.</p>
+                            <p>A medida que el Caballero del Amanecer se aproximaba a los límites del bosque, las energías oscuras del castillo comenzaron a corroer la cordura de Kaelen. Fue entonces cuando apareció Zephyrus, un antiguo prodigio de la Academia Imperial de Magia. Zephyrus había sido desterrado al exilio por Malakor cuando sus cálculos astrológicos y estudios rúnicos advirtieron sobre la catástrofe que traería el pacto demoníaco del rey. Tras años vagando por ruinas olvidadas y estudiando grabados ancestrales, Zephyrus dominaba la magia de repulsión. Con la sabiduría de un sabio errante, grabó potentes encantamientos en el equipo de Kaelen, capaces de desviar los proyectiles de energía maldita y disipar las nieblas de pesadilla que rodeaban la fortaleza.</p>
+                            <p>Finalmente, en un refugio oculto entre las raíces de un roble milenario, Kaelen encontró el consuelo de Elara. Ella había sido la sanadora jefa del palacio, una mujer compasiva que lideró comisiones humanitarias para aliviar el dolor de las epidemias y las guerras. Incapaz de ser cómplice de las masacres perpetradas por los monstruos de Malakor, Elara había huido para curar en secreto a los campesinos moribundos. Con paciencia y devoción, Elara enseñó a Kaelen los secretos de la medicina botánica arcana y la canalización de la vitalidad interior, otorgándole brebajes y ungüentos esenciales para restaurar sus fuerzas y mantener el espíritu intacto en las batallas más duras.</p>
+                            <p>Unido el saber del estratega, el metal del herrero, el hechizo del mago y la bendición de la sanadora, el Caballero del Amanecer emergió del bosque marchito y se erigió frente a las imponentes y macabras murallas del castillo de Grimcliff.</p>
+
+                            <h3 class="subtitulo">Capítulo III: El Asedio a Grimcliff y la Luz Definitiva</h3>
+
+                            <p>Atravesar las pesadas puertas del castillo marcó el inicio de una guerra sin tregua. En el interior de la fortaleza, Kaelen se vio envuelto en una lucha encarnizada e implacable, habitación por habitación. Las enseñanzas de Thorne le permitieron abrirse paso entre legiones de demonios y guardias corruptos; la armadura de Kogan desvió tajos mortales; los encantamientos de Zephyrus neutralizaron las trampas mágicas del pasillo real, y los remedios de Elara le devolvieron el aliento en los momentos en que sus fuerzas amenazaban con extinguirse. Cada peldaño ascendido en la gran torre era un tributo a la memoria de su aldea y a la libertad de Grimcliff.</p>
+                            <p>Por fin, tras derribar las dobles puertas de roble y hierro negro, Kaelen irrumpió en la sala del trono.</p>
+                            <p>En el corazón del mal, aguardaba el regente. Malakor conservaba la corona y la capa azul de su linaje, pero ya no parecía un ser humano; armado con un mandoble imbuido en fuego abisal, su sola presencia marchitaba las baldosas de mármol. La pelea final fue de proporciones titánicas. El rey corrupto alzó su mano y desató la energía de la tierra marchita, invocando de las profundidades olas de almas atormentadas y lanzando ataques de largo alcance de magia oscura. La violencia de sus ataques desató ondas de choque devastadoras que agrietaron los muros de la sala, exigiendo al héroe un despliegue de agilidad e instinto milimétrico para no ser consumido por la tiranía.</p>
+                            <p>En medio del duelo, los esbirros del rey emergían incesantemente desde los rincones sombríos, manteniendo a Kaelen bajo una presión sofocante. Al perder el control de su propia oscuridad, Malakor soltó el mandoble y su cuerpo se transformó en una criatura alada de garras y pico, que flotaba sobre la arena. Sin embargo, en la hora más oscura, la espada Alborada comenzó a pulsar con una calidez dorada. Kaelen recordó las lecciones de sus mentores, el sufrimiento de los inocentes y la sonrisa de su familia perdida. Reuniendo el valor acumulado de todo un reino, Kaelen bloqueó un golpe mortal del tirano, quebró la guardia de Malakor con la técnica que Thorne le había enseñado, y clavó la hoja radiante de Alborada directamente en el núcleo tenebroso del pecho del rey.</p>
+                            <p>Un destello cegador de luz solar pura brotó de la herida, expandiéndose en una onda expansiva que pulverizó las sombras del trono, destruyó a los demonios convocados y atravesó el techo de la fortaleza, rasgando el firmamento purpúreo.</p>
+                            <p>El velo de tinieblas que cubría Grimcliff se disipó al instante. Las cadenas de la opresión que habían ahogado a las ciudades se rompieron de golpe, y el cálido resplandor del sol volvió a bañar las praderas, haciendo florecer la vida y la paz en cada rincón de la tierra.</p>
+
+                        </div>
+                    </details>
+                </article>
+
+                <!-- Objetivo -->
+                <article class="tarjeta tarjeta-lg space-y-3">
+                    <h2 class="tarjeta-titulo cabecera text-primary">Objetivo</h2>
+                    <p class="text-lg md:text-xl leading-relaxed">
+                        Guiar a Kaelen por los tres niveles del juego (el Bosque Oscuro, el Castillo de Grimcliff y el Trono de la Noche Eterna), reuniendo a los aliados para obtener la espada <span class="font-medieval text-primary">Alborada</span>, superando enemigos, trampas y acertijos, y derrotando a Malakor en un combate de tres fases para restaurar la luz en el reino.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ========= PERSONAJES ========= -->
+        <section id="personajes" class="scroll-mt-24 space-y-6">
+            <h2 class="sec-titulo">Personajes</h2>
+            <p class="sec-intro">
+                Conoce al Héroe de la Luz, al Rey Tirano y a los Aliados de la Penumbra que te guiarán en tu travesía.
+            </p>
+
+            <!-- El padding lateral de cada ficha lo controla -->
+            <div class="carousel w-full bg-base-200 border-2 border-base-300 rounded-box shadow-2xl py-4 marco-brillo">
+
+                <!-- KAELEN -->
+                <div id="item1" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
+                    <div class="w-full lg:w-4/12">
+                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                            <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Kaelen"></video>
+                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                                <span class="visor-tipo text-base-content/70">Vestuario</span>
+                                <span class="visor-nombre font-medieval text-primary text-xl font-bold">Kaelen</span>
+                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-8/12 space-y-5">
+                        <div>
+                            <h3 class="font-medieval text-2xl sm:text-3xl md:text-4xl text-primary font-bold">Kaelen — El Caballero del Amanecer</h3>
+                            <p class="text-base text-base-content/80">Protagonista y héroe controlado por el jugador. Caballero del Amanecer; tras recibir Alborada, el Héroe de la Luz.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Descripción</span>
+                            <p class="text-lg md:text-xl leading-relaxed">Huérfano que creció en los suburbios de la capital y se hizo cazarrecompensas. Se retiró a una aldea remota a vivir en paz con su familia, pero la campaña de Malakor arrasó su hogar. Como único sobreviviente, retoma las armas impulsado por la sed de justicia.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo de viajero (inicio)" data-video="./video/kaelen-vestuario-atuendo-de-viajero-inicio.mp4">Atuendo de viajero (inicio)</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Armadura arcana (Héroe de la Luz)" data-video="./video/kaelen-vestuario-armadura-arcana-heroe-de-la-luz.mp4">Armadura arcana (Héroe de la Luz)</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Movimiento" data-video="./video/kaelen-animacion-movimiento.mp4">Movimiento</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Salto" data-video="./video/kaelen-animacion-salto.mp4">Salto</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Esquiva" data-video="./video/kaelen-animacion-esquiva.mp4">Esquiva</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataque con espada" data-video="./video/kaelen-animacion-ataque-con-espada.mp4">Ataque con espada</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Guardia" data-video="./video/kaelen-animacion-guardia.mp4">Guardia</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataque potenciado con Alborada" data-video="./video/kaelen-animacion-ataque-potenciado-con-alborada.mp4">Ataque potenciado con Alborada</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
+                        <a href="#item6" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje anterior">❮</a>
+                        <a href="#item2" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje siguiente">❯</a>
+                    </div>
+                </div>
+
+                <!-- MALAKOR EL CORRUPTO -->
+                <div id="item2" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
+                    <div class="w-full lg:w-4/12">
+                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                            <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Malakor el Corrupto"></video>
+                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                                <span class="visor-tipo text-base-content/70">Vestuario</span>
+                                <span class="visor-nombre font-medieval text-error text-xl font-bold">Malakor el Corrupto</span>
+                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-8/12 space-y-5">
+                        <div>
+                            <h3 class="font-medieval text-2xl sm:text-3xl md:text-4xl text-error font-bold">Malakor — Rey tirano</h3>
+                            <p class="text-base text-base-content/80">Jefe final y rey tirano de Grimcliff.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Descripción</span>
+                            <p class="text-lg md:text-xl leading-relaxed">Monarca que gobernó con benevolencia durante décadas, pero la paranoia, el aislamiento del poder y el temor a la vejez y a la muerte lo corrompieron. Selló un pacto con entes de las sombras que sumió al reino en una noche eterna.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo real (antes de la corrupción)" data-video="./video/malakor-vestuario-atuendo-real-antes-de-la-corrupcion.mp4">Atuendo real (antes de la corrupción)</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Forma final alada (corrupción)" data-video="./video/malakor-vestuario-forma-final-alada-corrupcion.mp4">Forma final alada (corrupción)</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataques con mandoble" data-video="./video/malakor-animacion-ataques-con-mandoble.mp4">Ataques con mandoble</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ondas de choque" data-video="./video/malakor-animacion-ondas-de-choque.mp4">Ondas de choque</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Invocación de esbirros" data-video="./video/malakor-animacion-invocacion-de-esbirros.mp4">Invocación de esbirros</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Garras y magia oscura" data-video="./video/malakor-animacion-garras-y-magia-oscura.mp4">Garras y magia oscura</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Derrota (golpe final de Alborada)" data-video="./video/malakor-animacion-derrota-golpe-final-de-alborada.mp4">Derrota (golpe final de Alborada)</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
+                        <a href="#item1" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje anterior">❮</a>
+                        <a href="#item3" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje siguiente">❯</a>
+                    </div>
+                </div>
+
+                <!-- THORNE -->
+                <div id="item3" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
+                    <div class="w-full lg:w-4/12">
+                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                            <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Thorne"></video>
+                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                                <span class="visor-tipo text-base-content/70">Vestuario</span>
+                                <span class="visor-nombre font-medieval text-secondary text-xl font-bold">Thorne</span>
+                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-8/12 space-y-5">
+                        <div>
+                            <h3 class="font-medieval text-2xl sm:text-3xl md:text-4xl text-secondary font-bold">Thorne — Comandante traicionado</h3>
+                            <p class="text-base text-base-content/80">Aliado, comandante y mentor de combate.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Descripción</span>
+                            <p class="text-lg md:text-xl leading-relaxed">Antiguo comandante supremo del ejército de Grimcliff, traicionado por Malakor con una emboscada suicida. Se refugió en el Bosque Oscuro y entrena a Kaelen en el combate.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-video="./video/thorne-vestuario-armadura-de-comandante-laminas-rojo-vino.mp4">Armadura de comandante: láminas rojo vino, coraza negra y casco verde azulado</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Combate con espada" data-video="./video/thorne-animacion-combate-con-espada.mp4">Combate con espada</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Guardia" data-video="./video/thorne-animacion-guardia.mp4">Guardia</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Rotura de guardia" data-video="./video/thorne-animacion-rotura-de-guardia.mp4">Rotura de guardia</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Enseñanza de técnicas" data-video="./video/thorne-animacion-ensenanza-de-tecnicas.mp4">Enseñanza de técnicas</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
+                        <a href="#item2" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje anterior">❮</a>
+                        <a href="#item4" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje siguiente">❯</a>
+                    </div>
+                </div>
+
+                <!-- KOGAN -->
+                <div id="item4" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
+                    <div class="w-full lg:w-4/12">
+                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                            <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Kogan"></video>
+                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                                <span class="visor-tipo text-base-content/70">Vestuario</span>
+                                <span class="visor-nombre font-medieval text-secondary text-xl font-bold">Kogan</span>
+                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-8/12 space-y-5">
+                        <div>
+                            <h3 class="font-medieval text-2xl sm:text-3xl md:text-4xl text-secondary font-bold">Kogan — Herrero arcano</h3>
+                            <p class="text-base text-base-content/80">Aliado y herrero arcano; forjó la espada Alborada.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Descripción</span>
+                            <p class="text-lg md:text-xl leading-relaxed">Último heredero de un linaje de herreros arcanos que fusionaban el metal con propiedades elementales. Se ocultaba como armero común y forjó la espada Alborada.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-video="./video/kogan-vestuario-atuendo-de-armero-comun-tunica-roja-ajus.mp4">Atuendo de armero común: túnica roja ajustada, cuello negro alto y guantes oscuros</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Forja" data-video="./video/kogan-animacion-forja.mp4">Forja</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Refuerzo de la armadura" data-video="./video/kogan-animacion-refuerzo-de-la-armadura.mp4">Refuerzo de la armadura</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Entrega de la espada" data-video="./video/kogan-animacion-entrega-de-la-espada.mp4">Entrega de la espada</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
+                        <a href="#item3" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje anterior">❮</a>
+                        <a href="#item5" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje siguiente">❯</a>
+                    </div>
+                </div>
+
+                <!-- ZEPHYRUS -->
+                <div id="item5" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
+                    <div class="w-full lg:w-4/12">
+                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                            <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Zephyrus"></video>
+                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                                <span class="visor-tipo text-base-content/70">Vestuario</span>
+                                <span class="visor-nombre font-medieval text-secondary text-xl font-bold">Zephyrus</span>
+                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-8/12 space-y-5">
+                        <div>
+                            <h3 class="font-medieval text-2xl sm:text-3xl md:text-4xl text-secondary font-bold">Zephyrus — Mago exiliado</h3>
+                            <p class="text-base text-base-content/80">Aliado y mago exiliado.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Descripción</span>
+                            <p class="text-lg md:text-xl leading-relaxed">Antiguo prodigio de la Academia Imperial, desterrado por advertir la catástrofe que traería el pacto del rey.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-video="./video/zephyrus-vestuario-tunica-de-mago-exiliado-gris-y-violeta-c.mp4">Túnica de mago exiliado: gris y violeta con runas doradas, capucha y bastón</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Conjuros de repulsión" data-video="./video/zephyrus-animacion-conjuros-de-repulsion.mp4">Conjuros de repulsión</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Grabado de runas protectoras" data-video="./video/zephyrus-animacion-grabado-de-runas-protectoras.mp4">Grabado de runas protectoras</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Disipación de niebla y barreras" data-video="./video/zephyrus-animacion-disipacion-de-niebla-y-barreras.mp4">Disipación de niebla y barreras</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
+                        <a href="#item4" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje anterior">❮</a>
+                        <a href="#item6" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje siguiente">❯</a>
+                    </div>
+                </div>
+
+                <!-- ELARA -->
+                <div id="item6" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
+                    <div class="w-full lg:w-4/12">
+                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                            <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Elara"></video>
+                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                                <span class="visor-tipo text-base-content/70">Vestuario</span>
+                                <span class="visor-nombre font-medieval text-secondary text-xl font-bold">Elara</span>
+                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-8/12 space-y-5">
+                        <div>
+                            <h3 class="font-medieval text-2xl sm:text-3xl md:text-4xl text-secondary font-bold">Elara — Sanadora</h3>
+                            <p class="text-base text-base-content/80">Aliada y sanadora.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Descripción</span>
+                            <p class="text-lg md:text-xl leading-relaxed">Antigua sanadora real que guiaba un equipo humanitario y huyó del castillo para curar en secreto a los sobrevivientes del reino.</p>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-video="./video/elara-vestuario-atuendo-de-sanadora-errante-gris-oscuro-.mp4">Atuendo de sanadora errante: gris oscuro con detalles azules y botas de combate</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Canalización de vitalidad" data-video="./video/elara-animacion-canalizacion-de-vitalidad.mp4">Canalización de vitalidad</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Medicina botánica arcana" data-video="./video/elara-animacion-medicina-botanica-arcana.mp4">Medicina botánica arcana</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Entrega de elixires y ungüentos" data-video="./video/elara-animacion-entrega-de-elixires-y-unguentos.mp4">Entrega de elixires y ungüentos</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
+                        <a href="#item5" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje anterior">❮</a>
+                        <a href="#item1" class="btn btn-circle btn-sm pointer-events-auto" aria-label="Personaje siguiente">❯</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Puntos para indicar la ficha en el carrusel -->
+            <div id="puntos" class="flex justify-center gap-3 py-2">
+                <a href="#item1" aria-label="Kaelen" class="w-3.5 h-3.5 rounded-full bg-base-300 hover:bg-primary"></a>
+                <a href="#item2" aria-label="Malakor el Corrupto" class="w-3.5 h-3.5 rounded-full bg-base-300 hover:bg-primary"></a>
+                <a href="#item3" aria-label="Thorne" class="w-3.5 h-3.5 rounded-full bg-base-300 hover:bg-primary"></a>
+                <a href="#item4" aria-label="Kogan" class="w-3.5 h-3.5 rounded-full bg-base-300 hover:bg-primary"></a>
+                <a href="#item5" aria-label="Zephyrus" class="w-3.5 h-3.5 rounded-full bg-base-300 hover:bg-primary"></a>
+                <a href="#item6" aria-label="Elara" class="w-3.5 h-3.5 rounded-full bg-base-300 hover:bg-primary"></a>
+            </div>
+        </section>
+
+        <!-- ========= MUNDOS ========= -->
+        <section id="mundos" class="scroll-mt-24 space-y-6">
+            <h2 class="sec-titulo">Mundos y niveles</h2>
+            <p class="sec-intro">
+                El recorrido es lineal, de oeste a este: el primer nivel enseña, el segundo desafía y el tercero pone a prueba todo lo aprendido.
+            </p>
+
+            <!-- Nivel 1 -->
+            <article class="tarjeta flex flex-col md:flex-row gap-6">
+                <!-- <img src="img/nivel1.png" alt="Captura: El Bosque Oscuro" class="w-full h-full object-cover rounded-box"> -->
+                <div class="media-slot w-full md:w-5/12 h-auto aspect-[16/10] md:aspect-[4/3] p-4">
+                    <span class="font-medieval text-accent text-lg font-bold text-center">Captura: El Bosque Oscuro</span>
+                </div>
+                <div class="w-full md:w-7/12 space-y-3 text-lg leading-relaxed">
+                    <h3 class="tarjeta-titulo cabecera">Nivel 1: El Bosque Oscuro (Las Penumbras)</h3>
+                    <p><strong class="font-medieval text-primary">Descripción:</strong> Bosque de árboles retorcidos, neblina densa y ruinas cubiertas de musgo, apenas iluminado por una luna tenue. Es el nivel tutorial: exploración, sigilo y acertijos al aire libre.</p>
+                    <p><strong class="font-medieval text-primary">Objetivos:</strong> Aprender las mecánicas, encontrar a los cuatro aliados para conseguir el mapa y los ítems, y obtener la espada <span class="font-medieval text-primary">Alborada</span>.</p>
+                    <p><strong class="font-medieval text-primary">Zonas:</strong> entrada del bosque, sendero de Thorne, refugio de Kogan y límite del bosque.</p>
+                    <p class="text-base text-base-content/80 pt-2 border-t border-base-300"><strong class="font-medieval">Personajes involucrados:</strong> Kaelen, Thorne, Kogan, Zephyrus, Elara y los engendros del bosque.</p>
+                </div>
+            </article>
+
+            <!-- Nivel 2 -->
+            <article class="tarjeta flex flex-col md:flex-row gap-6">
+                <!-- <img src="img/nivel2.png" alt="Captura: El Castillo de Grimcliff" class="w-full h-full object-cover rounded-box"> -->
+                <div class="media-slot w-full md:w-5/12 h-auto aspect-[16/10] md:aspect-[4/3] p-4">
+                    <span class="font-medieval text-secondary text-lg font-bold text-center">Captura: El Castillo de Grimcliff</span>
+                </div>
+                <div class="w-full md:w-7/12 space-y-3 text-lg leading-relaxed">
+                    <h3 class="tarjeta-titulo cabecera">Nivel 2: El Castillo de Grimcliff</h3>
+                    <p><strong class="font-medieval text-primary">Descripción:</strong> Fortaleza gótica de piedra oscura, con salones de varios pisos, tapices rasgados y antorchas que crean pozas de luz cálida. Es un espacio cerrado de infiltración y combate, con trampas de fuego y pinchos.</p>
+                    <p><strong class="font-medieval text-primary">Objetivos:</strong> Superar los obstáculos y derrotar a la guardia del rey, habitación por habitación, hasta llegar a las puertas de la sala del trono.</p>
+                    <p><strong class="font-medieval text-primary">Zonas:</strong> patio, salones y pasillos, biblioteca prohibida y ascenso a la torre.</p>
+                    <p class="text-base text-base-content/80 pt-2 border-t border-base-300"><strong class="font-medieval">Personajes involucrados:</strong> Kaelen, guardias corruptos y enemigos a distancia.</p>
+                </div>
+            </article>
+
+            <!-- Nivel 3 -->
+            <article class="tarjeta flex flex-col md:flex-row gap-6">
+                <!-- <img src="img/nivel3.png" alt="Captura: El Trono de la Noche Eterna" class="w-full h-full object-cover rounded-box"> -->
+                <div class="media-slot w-full md:w-5/12 h-auto aspect-[16/10] md:aspect-[4/3] p-4">
+                    <span class="font-medieval text-error text-lg font-bold text-center">Captura: El Trono de la Noche Eterna</span>
+                </div>
+                <div class="w-full md:w-7/12 space-y-3 text-lg leading-relaxed">
+                    <h3 class="tarjeta-titulo cabecera">Nivel 3: El Trono de la Noche Eterna</h3>
+                    <p><strong class="font-medieval text-primary">Descripción:</strong> Una sola sala con plataformas, un trono rojo, candelabros, estandartes y columnas enormes. El suelo y los muros se agrietan a medida que avanza el combate.</p>
+                    <p><strong class="font-medieval text-primary">Objetivos:</strong> Derrotar a Malakor en un combate de tres fases (el rey guerrero, las sombras del rey y la criatura alada) para restaurar la luz en el reino.</p>
+                    <p class="text-base text-base-content/80 pt-2 border-t border-base-300"><strong class="font-medieval">Personajes involucrados:</strong> Kaelen, Malakor el Corrupto y los esbirros de sombra.</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- ========= MANUAL ========= -->
+        <section id="manual" class="scroll-mt-24 space-y-6">
+
+            <h2 class="sec-titulo" data-i18n="manual_titulo">Manual</h2>
+            <p class="sec-intro">
+                Es un juego de acción y plataformas 2D con vista lateral y un recorrido lineal por tres niveles: avanzas en orden y no puedes volver a las zonas anteriores. El Bosque Oscuro funciona como tutorial y enseña cada mecánica por zonas; el Castillo desafía con combate y exploración; y el Trono de la Noche Eterna pone a prueba todo lo aprendido contra Malakor.
+            </p>
+
+            <div id="manual-ui" class="tarjeta p-0 overflow-hidden">
+
+                <!-- Pestañas del manual -->
+                <div id="man-tabs" class="flex flex-wrap gap-2 p-3 sm:p-4 border-b border-base-300 bg-base-300/40 font-medieval">
+                    <button type="button" data-tab="0" class="btn btn-sm btn-primary">Controles</button>
+                    <button type="button" data-tab="1" class="btn btn-sm btn-outline btn-primary">Interfaz</button>
+                    <button type="button" data-tab="2" class="btn btn-sm btn-outline btn-primary">Transformación</button>
+                    <button type="button" data-tab="3" class="btn btn-sm btn-outline btn-primary">Combate</button>
+                    <button type="button" data-tab="4" class="btn btn-sm btn-outline btn-primary">Ítems</button>
+                    <button type="button" data-tab="5" class="btn btn-sm btn-outline btn-primary">Enemigos</button>
+                </div>
+
+                <div class="p-3 sm:p-6 md:p-8">
+
+                    <!-- Controles: teclado interactivo -->
+                    <div data-panel="0" class="grid lg:grid-cols-5 gap-8 items-center">
+                        <div class="lg:col-span-3 space-y-4">
+                            <h3 class="tarjeta-titulo cabecera">Controles (PC)</h3>
+                            <p class="text-base text-base-content/80">Toca una tecla o púlsala en tu teclado para ver qué hace. <span class="font-medieval text-primary">Teclas provisionales</span>, pueden cambiar.</p>
+
+                            <div class="bg-base-300/60 rounded-box p-3 sm:p-6 flex flex-wrap justify-center items-end gap-x-10 gap-y-6">
+
+                                <div class="space-y-2">
+                                    <span class="font-medieval text-xs text-base-content/70 block">Movimiento</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button type="button" class="tecla tecla-media" data-key="control" data-label="Ctrl" data-titulo="Sigilo" data-desc="Avance lento y agachado." data-titulo-en="Stealth" data-desc-en="Slow, crouched advance."><span>Ctrl</span><small>Sigilo</small></button>
+                                        <button type="button" class="tecla" data-key="a" data-label="A" data-titulo="Movimiento" data-desc="Desplazamiento lateral hacia la izquierda." data-titulo-en="Movement" data-desc-en="Lateral movement to the left."><span>A</span><small>Izquierda</small></button>
+                                        <button type="button" class="tecla" data-key="d" data-label="D" data-titulo="Movimiento" data-desc="Desplazamiento lateral hacia la derecha." data-titulo-en="Movement" data-desc-en="Lateral movement to the right."><span>D</span><small>Derecha</small></button>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button type="button" class="tecla tecla-media" data-key="shift" data-label="Shift" data-titulo="Esquiva" data-desc="Movimiento rápido con breve inmunidad." data-titulo-en="Dodge" data-desc-en="A quick move with brief invulnerability."><span>Shift</span><small>Esquiva</small></button>
+                                        <button type="button" class="tecla tecla-ancha" data-key=" " data-label="Espacio" data-label-en="Space" data-titulo="Salto" data-desc="Para superar troncos, raíces y plataformas." data-titulo-en="Jump" data-desc-en="To clear logs, roots and platforms."><span>Espacio</span><small>Salto</small></button>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <span class="font-medieval text-xs text-base-content/70 block">Combate</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button type="button" class="tecla" data-key="j" data-label="J" data-titulo="Ataque básico" data-desc="Golpe con la espada, que se encadena en un combo corto." data-titulo-en="Basic attack" data-desc-en="A sword strike that chains into a short combo."><span>J</span><small>Ataque</small></button>
+                                        <button type="button" class="tecla" data-key="k" data-label="K" data-titulo="Guardia" data-desc="Bloqueo de ataques frontales." data-titulo-en="Guard" data-desc-en="Blocks frontal attacks."><span>K</span><small>Guardia</small></button>
+                                        <button type="button" class="tecla" data-key="l" data-label="L" data-titulo="Ataque potenciado" data-desc="Golpe cargado con Alborada." data-titulo-en="Powered attack" data-desc-en="A charged strike with Alborada."><span>L</span><small>Potenciado</small></button>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <span class="font-medieval text-xs text-base-content/70 block">Acciones</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button type="button" class="tecla" data-key="e" data-label="E" data-titulo="Interacción y diálogo" data-desc="Para hablar con los aliados." data-titulo-en="Interaction and dialogue" data-desc-en="To talk with the allies."><span>E</span><small>Hablar</small></button>
+                                        <button type="button" class="tecla" data-key="q" data-label="Q" data-titulo="Uso de ítems" data-desc="Elixires, runas y llaves." data-titulo-en="Item use" data-desc-en="Elixirs, runes and keys."><span>Q</span><small>Ítems</small></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detalle de la tecla elegida -->
+                        <div class="lg:col-span-2 bg-base-300 rounded-box p-6 text-center space-y-4 min-h-[16rem] flex flex-col items-center justify-center">
+                            <span id="det-tecla" data-no-i18n class="tecla activa pointer-events-none tecla-media" style="height:5rem;font-size:1.6rem">A</span>
+                            <h4 id="det-titulo" data-no-i18n class="font-medieval text-2xl text-primary font-bold">Movimiento</h4>
+                            <p id="det-desc" data-no-i18n class="text-lg leading-relaxed">Desplazamiento lateral.</p>
+                        </div>
+                    </div>
+
+                    <!-- 1. Interfaz -->
+                    <div data-panel="1" class="hidden space-y-5">
+                        <h3 class="tarjeta-titulo cabecera">Vida y HUD</h3>
+                        <p class="text-lg md:text-xl leading-relaxed">Barra de vida, contador de elixires, indicador de nivel y de zona, y barra de vida del jefe en el combate final. Con Alborada se suma la barra de carga del ataque potenciado.</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="chip">Barra de vida</span>
+                            <span class="chip">Contador de elixires</span>
+                            <span class="chip">Nivel y zona</span>
+                            <span class="chip">Vida del jefe</span>
+                            <span class="chip">Carga de Alborada</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Transformación -->
+                    <div data-panel="2" class="hidden space-y-5">
+                        <h3 class="tarjeta-titulo cabecera">Transformación</h3>
+                        <p class="text-lg md:text-xl leading-relaxed">Al recibir Alborada de Kogan, Kaelen se convierte en el Héroe de la Luz.</p>
+                        <div class="grid sm:grid-cols-3 gap-3 text-lg">
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Armadura arcana</strong><span class="item-desc">Aumenta tu vida máxima y tu resistencia.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Espada Alborada</strong><span class="item-desc">Mayor daño y alcance.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Brillo</strong><span class="item-desc">Se intensifica con cada enemigo derrotado.</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Combate -->
+                    <div data-panel="3" class="hidden space-y-5">
+                        <h3 class="tarjeta-titulo cabecera">Rotura de guardia</h3>
+                        <p class="text-lg md:text-xl leading-relaxed">Técnica de Thorne que rompe la defensa de los enemigos con escudo y la de Malakor.</p>
+                    </div>
+
+                    <!-- 4. Ítems -->
+                    <div data-panel="4" class="hidden space-y-5">
+                        <h3 class="tarjeta-titulo cabecera">Gestión de ítems</h3>
+                        <p class="text-lg md:text-xl leading-relaxed">Los ítems son limitados, úsalos con cuidado.</p>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-lg">
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Elixires de Elara</strong><span class="item-desc">Restauran salud.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Runas de Zephyrus</strong><span class="item-desc">De un solo uso: disipan una barrera mágica o absorben un golpe de magia oscura.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Llaves</strong><span class="item-desc">Abren las puertas del castillo.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Mapa del bosque</strong><span class="item-desc">Muestra la ruta hacia los aliados.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Fragmentos de luz</strong><span class="item-desc">Coleccionables ocultos que recompensan la exploración.</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Enemigos -->
+                    <div data-panel="5" class="hidden space-y-5">
+                        <h3 class="tarjeta-titulo cabecera">Enemigos y escenarios</h3>
+                        <div class="grid md:grid-cols-2 gap-6 text-lg">
+                            <div class="space-y-2">
+                                <strong class="font-medieval text-primary">Enemigos</strong>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="chip">Engendros del bosque</span>
+                                    <span class="chip">Guardias con lanza o escudo</span>
+                                    <span class="chip">Enemigos a distancia</span>
+                                    <span class="chip">Esbirros de sombra</span>
+                                    <span class="chip">Malakor</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <strong class="font-medieval text-primary">Obstáculos</strong>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="chip">Estacas</span>
+                                    <span class="chip">Lodo</span>
+                                    <span class="chip">Barreras mágicas</span>
+                                    <span class="chip">Trampas de fuego (marcadas en rojo)</span>
+                                    <span class="chip">Columnas que caen</span>
+                                    <span class="chip">Ondas de choque</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                (function () {
+                    const ui = document.getElementById('manual-ui');
+                    const tabs = ui.querySelectorAll('#man-tabs [data-tab]');
+                    const paneles = ui.querySelectorAll('[data-panel]');
+                    const teclas = ui.querySelectorAll('.tecla[data-key]');
+                    const dTecla = document.getElementById('det-tecla');
+                    const dTitulo = document.getElementById('det-titulo');
+                    const dDesc = document.getElementById('det-desc');
+                    let panelActual = 0;
+                    let visible = false;
+                    let seleccion = null;
+
+                    // Idioma 
+                    const enIng = () => typeof idioma !== 'undefined' && idioma === 'en';
+                    const dato = (el, c) => (enIng() && el.dataset[c + 'En']) || el.dataset[c];
+
+                    function verPanel(k) {
+                        panelActual = k;
+                        paneles.forEach((p) => p.classList.toggle('hidden', Number(p.dataset.panel) !== k));
+                        // La pestaña activa va rellena; las demás, con contorno
+                        tabs.forEach((t) => t.classList.toggle('btn-outline', Number(t.dataset.tab) !== k));
+                    }
+                    tabs.forEach((t) => t.addEventListener('click', () => verPanel(Number(t.dataset.tab))));
+
+                    function elegir(el) {
+                        seleccion = el;
+                        teclas.forEach((t) => t.classList.toggle('activa', t === el));
+                        dTecla.textContent = dato(el, 'label');
+                        dTitulo.textContent = dato(el, 'titulo');
+                        dDesc.textContent = dato(el, 'desc');
+                    }
+                    teclas.forEach((t) => t.addEventListener('click', () => elegir(t)));
+
+                    // Al cambiar de idioma, vuelve a escribir el detalle de la tecla elegida
+                    document.addEventListener('idioma-cambiado', () => { if (seleccion) elegir(seleccion); });
+
+                    // Al pulsar la tecla real en el teclado (solo si la sección está a la vista)
+                    new IntersectionObserver((e) => { visible = e[0].isIntersecting; }, { threshold: 0.2 }).observe(ui);
+                    document.addEventListener('keydown', (e) => {
+                        if (!visible || panelActual !== 0) return;
+                        if (e.ctrlKey && e.key !== 'Control') return;   // para no interferir con Ctrl+C, Ctrl+F...
+                        const k = e.key.toLowerCase();
+                        const el = [...teclas].find((t) => t.dataset.key === k);
+                        if (!el) return;
+                        if (k === ' ') e.preventDefault();               // evita que la página baje con espacio
+                        elegir(el);
+                    });
+
+                    elegir(teclas[1]);
+                })();
+            </script>
+        </section>
+
+        <!-- ========= PREMIOS ========= -->
+        <section id="premios" class="scroll-mt-24 space-y-6">
+            <h2 class="sec-titulo">Premios y logros</h2>
+            <p class="sec-intro">
+                Los logros reconocen tu avance en la historia, tu habilidad en combate y tus mejores marcas.
+            </p>
+
+            <div class="space-y-6">
+
+                <!-- Hitos y logros (imagen a la izquierda) -->
+                <article id="hitos" class="tarjeta flex flex-col md:flex-row items-center gap-8 md:min-h-[26rem]">
+                    <div class="media-slot halo">
+                        <img src="./img/Hitos_logros.png" alt="Hitos y logros" class="w-full h-full object-contain">
+                    </div>
+
+                    <div class="flex-1 min-w-0 w-full space-y-5">
+                        <div class="cabecera">
+                            <h3 class="tarjeta-titulo">Hitos y logros</h3>
+                            <p class="text-base sm:text-lg text-base-content/80">Reconocimientos por avanzar en la historia de Grimcliff.</p>
+                        </div>
+
+                        <ul class="grid md:grid-cols-2 gap-4 pt-1">
+                            <li class="vidrio vidrio-hover rounded-xl p-4">
+                                <strong class="item-titulo">Obtener la espada Alborada</strong>
+                                <span class="item-desc">Recíbela de Kogan en el Bosque Oscuro y transfórmate en el Héroe de la Luz.</span>
+                            </li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4">
+                                <strong class="item-titulo">Conocer a los cuatro aliados</strong>
+                                <span class="item-desc">Encuentra a Thorne, Kogan, Zephyrus y Elara.</span>
+                            </li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4">
+                                <strong class="item-titulo">Llegar al Castillo de Grimcliff</strong>
+                                <span class="item-desc">Sal del bosque y cruza el puente hacia el patio.</span>
+                            </li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4">
+                                <strong class="item-titulo">Derribar las puertas de hierro negro</strong>
+                                <span class="item-desc">Abre el paso a la sala del trono.</span>
+                            </li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4 md:col-span-2">
+                                <strong class="item-titulo">Devolver la luz al reino</strong>
+                                <span class="item-desc">Derrota a Malakor y haz que amanezca sobre Grimcliff.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Desafíos especiales (imagen a la derecha) -->
+                <article id="desafios" class="tarjeta flex flex-col md:flex-row-reverse items-center gap-8 md:min-h-[26rem]">
+                    <div class="media-slot halo">
+                        <img src="./img/Desafios_especiales.png" alt="Desafíos especiales" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex-1 min-w-0 w-full space-y-5">
+                        <div class="cabecera"><h3 class="tarjeta-titulo">Desafíos especiales</h3><p class="text-base sm:text-lg text-base-content/80">Logros opcionales para los jugadores que buscan poner a prueba su habilidad.</p></div>
+                        <ul class="grid md:grid-cols-2 gap-4 pt-1">
+                            <li class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Vencer a Malakor sin recibir daño</strong><span class="item-desc">Supera el combate final de tres fases sin perder nada de vida.</span></li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Reunir todos los fragmentos de luz</strong><span class="item-desc">Encuentra los coleccionables ocultos en los tres niveles.</span></li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Sombra del bosque</strong><span class="item-desc">Cruza el Bosque Oscuro usando el sigilo sin ser detectado.</span></li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Sin elixires</strong><span class="item-desc">Completa el juego sin usar los elixires de Elara.</span></li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Recompensas (imagen a la izquierda) -->
+                <article id="recompensas" class="tarjeta flex flex-col md:flex-row items-center gap-8 md:min-h-[26rem]">
+                    <div class="media-slot halo">
+                        <img src="./img/Recompensas.png" alt="Recompensas" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex-1 min-w-0 w-full space-y-5">
+                        <div class="cabecera"><h3 class="tarjeta-titulo">Recompensas</h3><p class="text-base sm:text-lg text-base-content/80">Récords de tiempo y reconocimientos que obtienes al avanzar en el juego.</p></div>
+                        <ul class="grid md:grid-cols-2 gap-4 pt-1">
+                            <li class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Récord en el Bosque Oscuro</strong><span class="item-desc">Registra tu mejor tiempo al completar el primer nivel.</span></li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Récord en el Castillo</strong><span class="item-desc">Registra tu mejor tiempo al llegar a las puertas de la sala del trono.</span></li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Récord contra Malakor</strong><span class="item-desc">Registra tu mejor tiempo en el combate final.</span></li>
+                            <li class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Héroe de la Luz</strong><span class="item-desc">Reconocimiento por completar la aventura y restaurar el amanecer.</span></li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ========= DESCARGAR ========= -->
+        <section id="descargar-apk" class="scroll-mt-24 space-y-6">
+            <h2 class="sec-titulo" data-i18n="descarga_titulo">Descargar</h2>
+            <p class="sec-intro">
+                La app complementaria de Nightfall of Grimcliff: consulta tu puntaje, conoce a los personajes, compite en el ranking y conecta con la comunidad.
+            </p>
+
+            <svg width="0" height="0" class="absolute" aria-hidden="true">
+                <defs>
+                    <linearGradient id="gLuna" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD9A8"/><stop offset="1" stop-color="#E07A3F"/></linearGradient>
+                    <mask id="mLuna"><rect width="100" height="100" fill="#fff"/><circle cx="64" cy="40" r="34" fill="#000"/></mask>
+                    <symbol id="luna" viewBox="0 0 100 100">
+                        <circle cx="46" cy="50" r="40" fill="url(#gLuna)" mask="url(#mLuna)"/>
+                        <path d="M30 80 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5z" fill="#FCD9A8"/>
+                    </symbol>
+                </defs>
+            </svg>
+
+            <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+
+                <!-- Celular con pantallas (provisional) -->
+                <div class="flex flex-col items-center gap-4 h-full">
+                    <div class="relative w-64 md:w-72 aspect-[9/19] rounded-[2.5rem] border-[10px] border-[var(--app-surface)] bg-[var(--app-bg)] shadow-2xl overflow-hidden ring-1 ring-[var(--app-muted)]/50">
+                        <div class="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-full z-10"></div>
+
+                        <div data-pantalla="splash" class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-[var(--app-surface)] to-[var(--app-bg)]">
+                            <svg class="w-24 h-24" viewBox="0 0 100 100"><use href="#luna"/></svg>
+                            <span class="font-medieval text-[var(--app-accent)] text-lg text-center px-4">Nightfall of Grimcliff</span>
+                        </div>
+
+                        <div data-pantalla="puntaje" class="absolute inset-0 hidden bg-[var(--app-bg)]">
+                            <div class="flex items-center justify-between px-3 pt-8 pb-2">
+                                <div class="flex items-center gap-1"><svg class="w-5 h-5" viewBox="0 0 100 100"><use href="#luna"/></svg><span class="font-medieval text-[var(--app-accent)] text-[10px]">Nightfall of Grimcliff</span></div>
+                                <span class="text-[var(--app-accent)] text-lg leading-none">☰</span>
+                            </div>
+                            <p class="text-center font-medieval text-[var(--app-text)] text-2xl mt-4">PUNTAJE</p>
+                            <svg viewBox="0 0 100 100" class="w-44 mx-auto mt-4">
+                                <circle cx="50" cy="50" r="40" fill="none" style="stroke: var(--app-muted)" stroke-width="5" stroke-dasharray="188.5 251.3" transform="rotate(135 50 50)"/>
+                                <circle cx="50" cy="50" r="40" fill="none" style="stroke: var(--app-accent-2)" stroke-width="5" stroke-dasharray="94.2 251.3" transform="rotate(135 50 50)"/>
+                                <text x="50" y="58" text-anchor="middle" style="fill: var(--app-text)" font-size="22">50</text>
+                            </svg>
+                            <div class="absolute bottom-0 inset-x-0 h-1/4 bg-gradient-to-t from-[var(--app-muted)]/30 to-transparent"></div>
+                        </div>
+
+                        <div data-pantalla="ranking" class="absolute inset-0 hidden bg-[var(--app-bg)]">
+                            <div class="flex items-center justify-between px-3 pt-8 pb-2">
+                                <div class="flex items-center gap-1"><svg class="w-5 h-5" viewBox="0 0 100 100"><use href="#luna"/></svg><span class="font-medieval text-[var(--app-accent)] text-[10px]">Nightfall of Grimcliff</span></div>
+                                <span class="text-[var(--app-accent)] text-lg leading-none">☰</span>
+                            </div>
+                            <p class="text-center font-medieval text-[var(--app-text)] text-xl mt-3">Mejores Jugadores</p>
+                            <ol class="mx-3 mt-4 rounded-lg bg-[var(--app-surface)] border border-[var(--app-muted)]/60 text-[var(--app-text)] text-xs divide-y divide-[var(--app-muted)]/40">
+                                <li class="flex justify-between px-3 py-2"><span>1. Jugador1</span><span class="text-[var(--app-accent)]">980</span></li>
+                                <li class="flex justify-between px-3 py-2"><span>2. Jugador2</span><span class="text-[var(--app-accent)]">910</span></li>
+                                <li class="flex justify-between px-3 py-2"><span>3. Jugador3</span><span class="text-[var(--app-accent)]">875</span></li>
+                                <li class="flex justify-between px-3 py-2"><span>4. Jugador4</span><span class="text-[var(--app-accent)]">820</span></li>
+                                <li class="flex justify-between px-3 py-2"><span>5. Jugador5</span><span class="text-[var(--app-accent)]">790</span></li>
+                            </ol>
+                        </div>
+
+                        <div data-pantalla="personajes" class="absolute inset-0 hidden bg-[var(--app-bg)]">
+                            <div class="flex items-center justify-between px-3 pt-8 pb-2">
+                                <div class="flex items-center gap-1"><svg class="w-5 h-5" viewBox="0 0 100 100"><use href="#luna"/></svg><span class="font-medieval text-[var(--app-accent)] text-[10px]">Nightfall of Grimcliff</span></div>
+                                <span class="text-[var(--app-accent)] text-lg leading-none">☰</span>
+                            </div>
+                            <p class="text-center font-medieval text-[var(--app-text)] text-sm mt-3 px-4">Descubre la oscuridad que gobierna Grimcliff</p>
+                            <div class="mx-3 mt-4 rounded-lg bg-[var(--app-surface)] border border-[var(--app-muted)]/60 p-3 text-[var(--app-text)] text-[10px] space-y-1">
+                                <div class="flex gap-2">
+                                    <div class="w-16 h-20 bg-black flex items-center justify-center text-center">Foto del personaje</div>
+                                    <div class="space-y-1"><p class="font-medieval text-[var(--app-accent)] text-xs">Kaelen</p><p>Edad: --</p><p>Puntos fuertes: --</p><p>Puntos débiles: --</p></div>
+                                </div>
+                                <p class="pt-1">Historia: texto provisional.</p>
+                            </div>
+                            <div class="flex justify-between mx-4 mt-3 text-[var(--app-muted)] text-[10px]"><span>← Anterior</span><span>Siguiente →</span></div>
+                        </div>
+                    </div>
+
+                    <div id="tabs-app" class="flex flex-wrap justify-center gap-2 font-medieval">
+                        <button type="button" data-ver="splash" class="btn btn-sm btn-primary">Inicio</button>
+                        <button type="button" data-ver="puntaje" class="btn btn-sm btn-outline btn-primary">Puntaje</button>
+                        <button type="button" data-ver="ranking" class="btn btn-sm btn-outline btn-primary">Ranking</button>
+                        <button type="button" data-ver="personajes" class="btn btn-sm btn-outline btn-primary">Personajes</button>
+                    </div>
+                    <p class="text-sm text-base-content/70">Pantallas de la app móvil.</p>
+
+                    <!-- Botón APK -->
+                    <a href="./descargas/nightfall-of-grimcliff.apk" download
+                       class="btn btn-primary btn-lg font-medieval mt-4 w-full sm:w-auto lg:mt-auto lg:mb-25">
+                        Descargar app (APK Android)
+                    </a>
+                </div>
+
+                <!-- Información -->
+                <div class="space-y-6">
+                    <article class="tarjeta space-y-3">
+                        <h3 class="tarjeta-titulo cabecera">Características</h3>
+                        <ul class="lista-brillo text-lg space-y-2">
+                            <li>Crea tu cuenta e inicia sesión con tu correo.</li>
+                            <li>Consulta tu puntaje en una gráfica dinámica.</li>
+                            <li>Ranking con los 10 jugadores de mayor puntaje.</li>
+                            <li>Comunidad: comparte consejos y puntajes, y envía sugerencias.</li>
+                            <li>Fichas de personajes con edad, puntos fuertes, puntos débiles e historia.</li>
+                            <li>Video promocional del juego.</li>
+                            <li>Acceso directo a esta página web.</li>
+                        </ul>
+                    </article>
+
+                    <article class="tarjeta space-y-3">
+                        <h3 class="tarjeta-titulo cabecera">Ficha de la APK</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="dato"><span class="text-primary block">Versión</span> V.0.0.1</div>
+                            <div class="dato"><span class="text-primary block">Tamaño</span> ~50 MB (provisional)</div>
+                            <div class="dato"><span class="text-primary block">Requiere</span> Android 8.0+ (provisional)</div>
+                            <div class="dato"><span class="text-primary block">Tipo</span> App complementaria</div>
+                        </div>
+                    </article>
+
+                    <!-- Cómo instalar -->
+                    <article class="tarjeta space-y-3">
+                        <h3 class="tarjeta-titulo cabecera">Cómo instalar</h3>
+                        <ol class="lista-numerada list-decimal list-inside text-lg space-y-1">
+                            <li>Descarga el archivo APK.</li>
+                            <li>Permite instalar apps de orígenes desconocidos cuando el sistema lo pida.</li>
+                            <li>Abre el archivo descargado y pulsa «Instalar».</li>
+                            <li>Crea tu cuenta y comienza la travesía.</li>
+                        </ol>
+                    </article>
+                </div>
+            </div>
+
+            <script>
+                (function () {
+                    const pantallas = document.querySelectorAll('#descargar-apk [data-pantalla]');
+                    const botones = document.querySelectorAll('#tabs-app [data-ver]');
+                    botones.forEach((b) => b.addEventListener('click', () => {
+                        pantallas.forEach((p) => p.classList.toggle('hidden', p.dataset.pantalla !== b.dataset.ver));
+                        botones.forEach((x) => x.classList.toggle('btn-outline', x !== b));
+                    }));
+                })();
+            </script>
+        </section>
+
+        <!-- ========= ACERCA DE ========= -->
+        <section id="acerca-de" class="scroll-mt-24 space-y-6">
+            <h2 class="sec-titulo" data-i18n="acerca_titulo">Acerca de</h2>
+            <article class="tarjeta tarjeta-lg space-y-6 w-full">
+                <h3 class="tarjeta-titulo cabecera">Equipo desarrollador</h3>
+                <ul class="grid md:grid-cols-2 gap-x-10 gap-y-4 text-lg">
+                    <li class="flex flex-wrap justify-between gap-x-4 border-b border-base-300/60 pb-2"><span><strong class="font-medieval text-primary">De la Paz Venegas Brandon Josué</strong><span class="block text-base text-base-content/70">Narrativa y selección de assets</span></span><span class="text-base text-base-content/70">tic-310029</span></li>
+                    <li class="flex flex-wrap justify-between gap-x-4 border-b border-base-300/60 pb-2"><span><strong class="font-medieval text-primary">Esparza Burgara Jesús Gabriel</strong><span class="block text-base text-base-content/70">Programación del videojuego</span></span><span class="text-base text-base-content/70">tic-310049</span></li>
+                    <li class="flex flex-wrap justify-between gap-x-4 border-b border-base-300/60 pb-2"><span><strong class="font-medieval text-primary">Fernández López Ángela Ailin</strong><span class="block text-base text-base-content/70">Storyboard e identidad visual</span></span><span class="text-base text-base-content/70">tic-310099</span></li>
+                    <li class="flex flex-wrap justify-between gap-x-4 border-b border-base-300/60 pb-2"><span><strong class="font-medieval text-primary">García Correa Bertha Odalys</strong><span class="block text-base text-base-content/70">Estructura HTML, secciones y wireframes</span></span><span class="text-base text-base-content/70">tic-310128</span></li>
+                    <li class="flex flex-wrap justify-between gap-x-4 border-b border-base-300/60 pb-2"><span><strong class="font-medieval text-primary">Medina Delgado Alan Emir</strong><span class="block text-base text-base-content/70">Aplicación móvil</span></span><span class="text-base text-base-content/70">tic-310011</span></li>
+                    <li class="flex flex-wrap justify-between gap-x-4 border-b border-base-300/60 pb-2"><span><strong class="font-medieval text-primary">Regino Inés Alan Andrés</strong><span class="block text-base text-base-content/70">Maquetación general del sitio</span></span><span class="text-base text-base-content/70">tic-310010</span></li>
+                </ul>
+            </article>
+        </section>
+    </main>
+
+    <!-- ========= FOOTER ========= -->
+    <footer class="footer footer-center p-6 bg-base-200 text-base-content border-t border-base-300 font-medieval">
+        <aside>
+            <p>© 2026 Nightfall of Grimcliff - Universidad Tecnológica de Nayarit</p>
+        </aside>
+    </footer>
+
+    <!-- ========= TRADUCCIÓN ES / ENG (archivo externo) ========= -->
+    <script src="./js/traduccion.js?v=4"></script>
+
+    <!-- ========= IDIOMA DEL DOCUMENTO (accesibilidad) ========= -->
+    <script>
+        document.addEventListener('idioma-cambiado', () => {
+            document.documentElement.lang = (typeof idioma !== 'undefined' && idioma === 'en') ? 'en' : 'es';
+        });
+    </script>
+
+    <!-- ========= MENÚ HAMBURGUESA ========= -->
+    <script>
+        (function () {
+            const btn = document.getElementById('btn-menu');
+            const menu = document.getElementById('menu-movil');
+            const abrir = document.getElementById('ico-abrir');
+            const cerrar = document.getElementById('ico-cerrar');
+
+            function alternar(mostrar) {
+                menu.classList.toggle('hidden', !mostrar);
+                abrir.classList.toggle('hidden', mostrar);
+                cerrar.classList.toggle('hidden', !mostrar);
+                btn.setAttribute('aria-expanded', mostrar);
+            }
+            btn.addEventListener('click', () => alternar(menu.classList.contains('hidden')));
+            menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => alternar(false)));
+            window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => { if (e.matches) alternar(false); });
+        })();
+    </script>
+
+    <!-- ========= INDICADOR DEL CARRUSEL ========= -->
+    <script>
+        const carrusel = document.querySelector("#personajes .carousel");
+        const puntos = document.querySelectorAll("#puntos a");
+
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach((e) => {
+                if (e.isIntersecting) {
+                    puntos.forEach((p) =>
+                        p.classList.toggle("dot-activo", p.getAttribute("href") === "#" + e.target.id)
+                    );
+                }
+            });
+        }, { root: carrusel, threshold: 0.6 });
+        carrusel.querySelectorAll(".carousel-item").forEach((item) => observador.observe(item));
+
+        document.querySelectorAll('#personajes .carousel a[href^="#item"], #puntos a').forEach((a) => {
+            a.addEventListener("click", (ev) => {
+                ev.preventDefault();
+                const destino = document.querySelector(a.getAttribute("href"));
+                carrusel.scrollTo({ left: destino.offsetLeft, behavior: "smooth" });
+            });
+        });
+    </script>
+
+    <!-- ========= ESPACIO DE VIDEO DE PERSONAJES (vestuarios y animaciones) ========= -->
+    <script>
+        document.querySelectorAll('#personajes .carousel-item').forEach((item) => {
+            const video = item.querySelector('.visor-video');
+            const vacio = item.querySelector('.visor-vacio');
+            const tipo = item.querySelector('.visor-tipo');
+            const nombre = item.querySelector('.visor-nombre');
+            const nombreBase = nombre.textContent;   
+            const chips = item.querySelectorAll('.chip-sel');
+
+            function mostrarVacio() { video.style.display = 'none'; vacio.style.display = ''; }
+
+            function elegir(chip) {
+                chips.forEach((c) => c.setAttribute('aria-pressed', c === chip));
+                tipo.textContent = chip.dataset.tipo === 'vestuario' ? 'Vestuario' : 'Animación';
+                nombre.textContent = chip.dataset.nombre || nombreBase;
+                mostrarVacio();
+                video.preload = 'auto';  
+                video.src = chip.dataset.video;
+                video.load();
+            }
+
+            // Si el archivo existe, se muestra el video; si no carga queda un aviso
+            video.addEventListener('loadeddata', () => {
+                vacio.style.display = 'none';
+                video.style.display = 'block';
+                video.play().catch(() => {});
+            });
+            video.addEventListener('error', mostrarVacio);
+
+            chips.forEach((c) => c.addEventListener('click', () => elegir(c)));
+
+            // El primer video de cada ficha se carga solo cuando la ficha entra en pantalla
+            const alVer = new IntersectionObserver((e) => {
+                if (e[0].isIntersecting) { elegir(chips[0]); alVer.disconnect(); }
+            }, { root: carrusel, threshold: 0.6 });
+            alVer.observe(item);
+        });
+    </script>
+
+    <!-- ========= PWA ========= -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+        }
+
+        const esIngles = () => typeof idioma !== 'undefined' && idioma === 'en';
+
+        let promptInstalacion = null;
+        const btnPwa = document.getElementById('btn-pwa');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            promptInstalacion = e;
+        });
+
+        btnPwa.addEventListener('click', async () => {
+            if (promptInstalacion) {
+                promptInstalacion.prompt();
+                await promptInstalacion.userChoice;
+                promptInstalacion = null;
+            } else {
+                alert(esIngles()
+                    ? 'To install: in Chrome open the ⋮ menu and choose "Install app". On iPhone/Safari tap Share and then "Add to Home Screen".'
+                    : 'Para instalar: en Chrome abre el menú ⋮ y elige "Instalar app". En iPhone/Safari pulsa Compartir y luego "Añadir a pantalla de inicio".');
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            btnPwa.textContent = esIngles() ? 'App installed' : 'App instalada';
+            btnPwa.disabled = true;
+        });
+
+        // Aviso de conexión (se muestra cuando no hay internet)
+        const avisoOffline = document.getElementById('aviso-offline');
+        const actualizarRed = () => avisoOffline.classList.toggle('hidden', navigator.onLine);
+        window.addEventListener('online', actualizarRed);
+        window.addEventListener('offline', actualizarRed);
+        actualizarRed();
+    </script>
+
+</body>
+
+</html>
