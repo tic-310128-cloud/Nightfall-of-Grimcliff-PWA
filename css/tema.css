@@ -3,6 +3,8 @@
    Orden de capas: se declararon aquí, antes que Tailwind y DaisyUI,
    para que las utilidades (h-10, px-14, text-sm...) siempre
    ganen a los resets de este archivo.
+   NOTA: las reglas que NO están dentro de un @layer ganan a las
+   utilidades de Tailwind (por ejemplo header/main, .carousel-item).
    ===================================================== */
 @layer theme, base, components, utilities;
 
@@ -23,6 +25,7 @@
   --color-secondary: #8B6CC9;
   --color-secondary-content: #0C0A11;
   --color-accent: #E9E2D6;
+  --color-accent-content: #0C0A11;
 
   /* Colores neutros */
   --color-neutral: #6A6078;
@@ -308,6 +311,61 @@ ol.lista-numerada li::marker { color: var(--brillo); }
     }
     .media-slot:has(> img) { background: transparent; }
     @media (min-width: 768px) { .media-slot { width: 20rem; height: 20rem; } }
+    /* Imagen de cada nivel (Mundos y niveles) */
+    .nivel-img {
+        width: 100%;
+        aspect-ratio: 9 / 4;          /* teléfono: capturas panorámicas completas */
+        object-fit: cover;
+        object-position: center;
+        align-self: center;
+        border-radius: var(--radius-box);
+        image-rendering: pixelated;   /* conserva la nitidez del pixel art */
+    }
+    /* Tableta: imagen al lado del texto, sin recortar */
+    @media (min-width: 768px) { .nivel-img { width: 41.666667%; } }
+    /* Computadora: la imagen ocupa todo el alto de la tarjeta (las 3 quedan del mismo tamaño) */
+    @media (min-width: 1024px) {
+        .nivel-img { aspect-ratio: auto; align-self: stretch; min-height: 0; }
+    }
+
+    /* Visor del carrusel de personajes: imagen o video, pixel art nítido.
+       La luz del personaje: un resplandor que sigue su silueta (drop-shadow) con el color --luz. */
+    .visor-img, .visor-video {
+        image-rendering: pixelated;
+        padding: 1.25rem;   /* aire para que el resplandor no se corte en el borde del recuadro */
+        filter:
+            drop-shadow(0 0 10px color-mix(in oklab, var(--luz, var(--brillo)) 70%, transparent))
+            drop-shadow(0 0 32px color-mix(in oklab, var(--luz, var(--brillo)) 40%, transparent));
+    }
+
+    /* Recuadro donde va la figura: borde del color de la luz y fondo oscuro liso.
+       --luz se define en el HTML de cada ficha. */
+    .visor {
+        position: relative;       /* imagen/video (absolute) se quedan dentro del recuadro */
+        overflow: hidden;
+        border-radius: var(--radius-box);
+        border: 1px solid color-mix(in oklab, var(--luz, var(--brillo)) 40%, var(--color-base-300));
+        background: linear-gradient(to bottom, #07050b, #0d0a12);
+    }
+    /* Aviso "pendiente" (se muestra con style.display = '' desde el script) */
+    .visor-vacio {
+        display: flex; flex-direction: column; align-items: center;
+        gap: .25rem; text-align: center; padding: 1rem;
+    }
+    .visor-tipo { font-family: var(--font-medieval, "MedievalSharp", serif); font-size: .875rem; }
+
+    /* Oculta la ruta técnica del archivo al público (quita esta regla mientras desarrollas) */
+    .visor-ruta { display: none; }
+
+    /* Leyenda de los NPC (sin sprites) */
+    .leyenda-npc {
+        font-size: 1.125rem; line-height: 1.6; font-style: italic;
+        padding: .5rem .75rem;
+        border-left: 3px solid color-mix(in oklab, var(--brillo) 60%, transparent);
+        background: color-mix(in oklab, var(--color-base-300) 35%, transparent);
+        border-radius: 0 var(--radius-field) var(--radius-field) 0;
+        color: color-mix(in oklab, var(--color-base-content) 85%, transparent);
+    }
 }
 
 
@@ -370,10 +428,11 @@ header, main {
 /* Carrusel de personajes: espacio lateral para las flechas */
 .carousel .carousel-item { padding-inline: 5rem; }
 
-/* Tableta: hasta 768px */
-@media (max-width: 768px) {
+/* Tableta: menos de 768px (evita chocar con el md: de Tailwind) */
+@media (max-width: 767.98px) {
   .carousel .carousel-item { padding-inline: 3rem; }
-  .btn { min-height: 2.75rem; }   /* 44px, cómodo para tocar */
+  .btn:not(.btn-circle):not(.btn-square) { min-height: 2.75rem; }   /* 44px, cómodo para tocar */
+  .carousel .btn-circle { --size: 2.75rem; }                        /* flechas táctiles y redondas */
   #man-tabs .btn, #tabs-app .btn { padding-inline: 1rem; }
 }
 

@@ -3,6 +3,8 @@
 // - Normal: coincide si el texto EMPIEZA con esa frase.
 // - Con "=" al inicio: coincide solo si el texto es EXACTAMENTE esa palabra/frase.
 // Para traducir más texto, solo agrega una línea nueva a esta lista.
+// Si cambias un texto del index.html, cambia también su línea aquí
+// (si no coincide, esa parte simplemente se queda en español).
 
 // ---------- 1. LISTA DE TRADUCCIONES ----------
 const EN = [
@@ -19,6 +21,7 @@ const EN = [
     ["Instalar PWA", "Install PWA"],
     ["Género", "Genre"], ["Hack and Slash 2D", "2D Hack and Slash"],
     ["Plataforma", "Platform"], ["Clasificación", "Rating"], ["Estilo", "Style"],
+    ["Juego: PC · App: Android", "Game: PC · App: Android"],
 
     // --- Historia y objetivo ---
     ["— La Travesía por Grimcliff —", "— The Journey Through Grimcliff —"],
@@ -34,8 +37,25 @@ const EN = [
     // --- Personajes (textos comunes) ---
     ["Conoce al Héroe de la Luz", "Meet the Hero of Light, the Tyrant King and the Allies of the Gloom who will guide you on your journey."],
     ["Descripción:", "Description:"], ["Descripción", "Description"],
+    ["Vestuarios (toca", "Outfits (tap one to view it)"],
+    ["Animaciones y sprites (toca", "Animations and sprites (tap one to view it)"],
     ["Vestuarios", "Outfits"], ["Imágenes y animaciones", "Images and animations"], ["Icono", "Icon"],
     ["=Malakor el Corrupto", "Malakor the Corrupt"],
+
+    // --- NPC sin sprites (Thorne, Kogan, Zephyrus y Elara) ---
+    ["=Sprites y animaciones", "Sprites and animations"],
+    ["Este personaje es un NPC", "This character is an NPC who guides the player through dialogue, so it has no sprites or animations."],
+
+    // --- Visor del carrusel (imagen o video) ---
+    ["=Vestuario", "Outfit"], ["=Animación", "Animation"],
+    ["Imagen o video pendiente", "Image or video pending"],
+    ["Video pendiente", "Video pending"],
+    ["Video de Kaelen", "Video of Kaelen"],
+    ["Video de Malakor el Corrupto", "Video of Malakor the Corrupt"],
+    ["Video de Thorne", "Video of Thorne"],
+    ["Video de Kogan", "Video of Kogan"],
+    ["Video de Zephyrus", "Video of Zephyrus"],
+    ["Video de Elara", "Video of Elara"],
 
     // --- Personaje: Kaelen ---
     ["Kaelen — El Caballero del Amanecer", "Kaelen — The Knight of Dawn"],
@@ -43,7 +63,9 @@ const EN = [
     ["Huérfano que creció", "An orphan raised in the suburbs of the capital who became a bounty hunter. He retired to a remote village to live in peace with his family, but Malakor's campaign razed his home. As the sole survivor, he takes up arms again, driven by a thirst for justice."],
     ["Atuendo de viajero (inicio)", "Traveler's outfit (start)"],
     ["Armadura arcana (Héroe", "Arcane armor (Hero of Light)"],
-    ["Movimiento, salto, esquiva", "Movement, jump, dodge, sword attack, guard and Alborada-powered attack."],
+    ["Ataque con espada", "Sword attack"],
+    ["Ataque potenciado con Alborada", "Alborada-powered attack"],
+    ["=Golpear", "Hit"], ["=Muerte", "Death"],
 
     // --- Personaje: Malakor ---
     ["Malakor — Rey tirano", "Malakor — Tyrant King"],
@@ -51,55 +73,70 @@ const EN = [
     ["Monarca que gobernó", "A monarch who ruled with benevolence for decades, but paranoia, the isolation of power and the fear of old age and death corrupted him. He sealed a pact with beings of shadow that plunged the kingdom into eternal night."],
     ["Atuendo real", "Royal attire (before the corruption)"],
     ["Forma final alada", "Final winged form (corruption)"],
-    ["Ataques con mandoble", "Greatsword attacks, shockwaves, summoning of shadow minions, claws and dark magic, and defeat by Alborada's final blow."],
+    ["Ataques con mandoble", "Greatsword attacks"],
+    ["Ondas de choque (Volar)", "Shockwaves (Fly)"],
+    ["Invocación de esbirros", "Summoning minions"],
+    ["Garras y magia oscura", "Claws and dark magic"],
+    ["Derrota (golpe final", "Defeat (Alborada's final blow)"],
 
     // --- Personaje: Thorne ---
     ["Thorne — Comandante traicionado", "Thorne — Betrayed Commander"],
     ["Aliado, comandante y mentor", "Ally, commander and combat mentor."],
     ["Antiguo comandante supremo", "Former supreme commander of Grimcliff's army, betrayed by Malakor with a suicidal ambush. He took refuge in the Dark Forest and trains Kaelen in combat."],
     ["Armadura de comandante", "Commander's armor: wine-red plates, black breastplate and teal helmet"],
-    ["Combate cuerpo a cuerpo", "Melee sword combat, guard, guard break and teaching of techniques."],
+    ["Combate con espada", "Sword combat"],
+    ["Enseñanza de técnicas", "Teaching techniques"],
 
     // --- Personaje: Kogan ---
     ["Kogan — Herrero arcano", "Kogan — Arcane Blacksmith"],
     ["Aliado y herrero arcano", "Ally and arcane blacksmith; he forged the sword Alborada."],
     ["Último heredero", "Last heir of a line of arcane blacksmiths who fused metal with elemental properties. He hid as an ordinary armorer and forged the sword Alborada."],
     ["Atuendo de armero común", "Ordinary armorer's outfit: fitted red tunic, high black collar and dark gloves"],
-    ["Forja, refuerzo", "Forging, reinforcing the armor with arcane metal and handing over the sword."],
+    ["=Forja", "Forging"],
+    ["Refuerzo de la armadura", "Armor reinforcement"],
+    ["Entrega de la espada", "Handing over the sword"],
 
     // --- Personaje: Zephyrus ---
     ["Zephyrus — Mago exiliado", "Zephyrus — Exiled Mage"],
     ["Aliado y mago exiliado", "Ally and exiled mage."],
     ["Antiguo prodigio", "Former prodigy of the Imperial Academy, banished for warning of the catastrophe the king's pact would bring."],
     ["Túnica de mago exiliado", "Exiled mage's robe: gray and violet with golden runes, hood and staff"],
-    ["Conjuros de repulsión", "Repulsion spells, engraving of protective runes and dispelling of fog and magical barriers."],
+    ["Conjuros de repulsión", "Repulsion spells"],
+    ["Grabado de runas protectoras", "Engraving protective runes"],
+    ["Disipación de niebla y barreras", "Dispelling fog and barriers"],
 
     // --- Personaje: Elara ---
     ["Elara — Sanadora", "Elara — Healer"],
     ["Aliada y sanadora", "Ally and healer."],
     ["Antigua sanadora real", "Former royal healer who led a humanitarian team and fled the castle to secretly heal the kingdom's survivors."],
     ["Atuendo de sanadora errante", "Wandering healer's outfit: dark gray with blue details and combat boots"],
-    ["Canalización de vitalidad", "Channeling of vitality, arcane botanical medicine and delivery of elixirs and ointments."],
+    ["Canalización de vitalidad", "Channeling vitality"],
+    ["Medicina botánica arcana", "Arcane botanical medicine"],
+    ["Entrega de elixires y ungüentos", "Delivering elixirs and ointments"],
 
     // --- Mundos y niveles ---
     ["El recorrido es lineal", "The route is linear, from west to east: the first level teaches, the second challenges and the third tests everything you have learned."],
-    ["Captura: El Bosque Oscuro", "Screenshot: The Dark Forest"],
-    ["Captura: El Castillo de Grimcliff", "Screenshot: Grimcliff Castle"],
-    ["Captura: El Trono de la Noche Eterna", "Screenshot: The Throne of Eternal Night"],
+    ["=El Bosque Oscuro", "The Dark Forest"],
+    ["=El Castillo de Grimcliff", "Grimcliff Castle"],
+    ["=El Trono de la Noche Eterna", "The Throne of Eternal Night"],
     ["Nivel 1: El Bosque Oscuro", "Level 1: The Dark Forest (The Gloom)"],
     ["Nivel 2: El Castillo", "Level 2: Grimcliff Castle"],
     ["Nivel 3: El Trono", "Level 3: The Throne of Eternal Night"],
     ["Objetivos:", "Objectives:"], ["Zonas:", "Zones:"],
+    // Nivel 1
     ["Bosque de árboles retorcidos", "Twisted trees, dense fog and moss-covered ruins, barely lit by a dim moon. It is the tutorial level: exploration, stealth and outdoor puzzles."],
     ["Aprender las mecánicas", "Learn the mechanics, find the four allies to get the map and items, and obtain the sword"],
     ["entrada del bosque", "forest entrance, Thorne's path, Kogan's refuge and the edge of the forest."],
     ["Kaelen, Thorne, Kogan", "Kaelen, Thorne, Kogan, Zephyrus, Elara and the spawn of the forest."],
+    // Nivel 2
     ["Fortaleza gótica", "Gothic fortress of dark stone, with multi-story halls, torn tapestries and torches that create pools of warm light. A closed space of infiltration and combat, with fire and spike traps."],
     ["Superar los obstáculos", "Overcome the obstacles and defeat the king's guard, room by room, until reaching the throne room doors."],
     ["patio, salones", "courtyard, halls and corridors, forbidden library and the tower ascent."],
     ["Kaelen, guardias corruptos", "Kaelen, corrupted guards and ranged enemies."],
-    ["Una sola sala", "A single room with platforms, a red throne, chandeliers, banners and huge columns. The floor and walls crack as the battle progresses."],
-    ["Derrotar a Malakor en un combate", "Defeat Malakor in a three-phase battle (the warrior king, the king's shadows and the winged creature) to restore light to the kingdom."],
+    // Nivel 3
+    ["Tras recorrer algunos pasillos", "After walking through some of the castle's corridors, Kaelen reaches a single room with platforms, a red throne, chandeliers, banners and huge columns. The floor and walls crack as the battle progresses."],
+    ["Recorrer los últimos pasillos", "Walk the final corridors to the throne room and defeat Malakor in a three-phase battle (the warrior king, the king's shadows and the winged creature) to restore light to the kingdom."],
+    ["pasillos finales", "final corridors, throne room doors and throne room."],
     ["Kaelen, Malakor el Corrupto", "Kaelen, Malakor the Corrupt and the shadow minions."],
 
     // --- Premios ---
@@ -143,8 +180,6 @@ const EN = [
     ["=Ítems", "Items"], ["=Enemigos", "Enemies"],
     ["Controles (PC)", "Controls (PC)"],
     ["Toca una tecla", "Tap a key or press it on your keyboard to see what it does."],
-    ["Teclas provisionales", "Provisional keys"],
-    [", pueden cambiar.", ", they may change."],
     ["=Movimiento", "Movement"], ["=Acciones", "Actions"],
     ["=Sigilo", "Stealth"], ["=Izquierda", "Left"], ["=Derecha", "Right"],
     ["=Esquiva", "Dodge"], ["=Salto", "Jump"], ["Espacio", "Space"],
@@ -202,7 +237,6 @@ const EN = [
     ["← Anterior", "← Previous"], ["Siguiente →", "Next →"],
     ["Inicio", "Home"], ["Puntaje", "Score"],
     ["Pantallas de la app móvil", "Mobile app screens."],
-    ["Pantallas de ejemplo", "Sample screens from the prototype."],
     ["Características", "Features"],
     ["Crea tu cuenta", "Create your account and log in with your email."],
     ["Consulta tu puntaje", "Check your score in a dynamic chart."],
@@ -224,7 +258,6 @@ const EN = [
 
     // --- Acerca de ---
     ["Acerca de", "About"],
-    ["Proyecto desarrollado", "Project developed at the Universidad Tecnológica de Nayarit. Team: (names here)."],
     ["Equipo desarrollador", "Development team"],
     ["Narrativa y selección", "Narrative and asset selection"],
     ["Programación del videojuego", "Game programming"],
@@ -232,17 +265,6 @@ const EN = [
     ["Estructura HTML", "HTML structure, sections and wireframes"],
     ["Aplicación móvil", "Mobile app"],
     ["Maquetación general", "Overall site layout"],
-    ["Datos de la institución", "Institution details"],
-    ["Institución:", "Institution:"],
-    ["Universidad Tecnológica de Nayarit (UT Nayarit)", "Technological University of Nayarit (UT Nayarit)"],
-    ["Carrera:", "Degree program:"],
-    ["Ingeniería en Desarrollo", "Software Development and Management Engineering"],
-    ["Asignatura:", "Course:"],
-    ["Aplicaciones Web Progresivas", "Progressive Web Applications"],
-    ["Profesor:", "Professor:"],
-    ["Grupo:", "Group:"],
-    ["Lugar y fecha:", "Place and date:"],
-    ["Xalisco, Nayarit", "Xalisco, Nayarit, Mexico · October 5, 2026"],
 
     // --- Aviso de conexión (PWA) ---
     ["Sin conexión: estás viendo", "Offline: you are viewing the saved version."],
@@ -252,7 +274,7 @@ const EN = [
 
     // --- Atributos (alt / aria-label / title) ---
     ["Cambiar idioma", "Change language"],
-    ["Abrir menú", "Open menu"],                      // botón hamburguesa
+    ["Abrir menú", "Open menu"],
     ["Personaje anterior", "Previous character"],
     ["Personaje siguiente", "Next character"],
     ["Logo de Nightfall", "Nightfall of Grimcliff logo"],
@@ -324,6 +346,7 @@ try { idioma = localStorage.getItem("idioma") || "es"; } catch (e) {}
 // Aplica el idioma "es" o "en" a toda la página
 function aplicarIdioma(l) {
     nodosTexto.forEach((o) => {
+        if (!o.nodo.isConnected) return;   // el visor del carrusel reemplaza algunos textos: se ignoran
         if (l === "en") {
             const ini = o.es.match(/^\s*/)[0], fin = o.es.match(/\s*$/)[0];
             o.nodo.nodeValue = ini + o.en + fin;
@@ -335,7 +358,7 @@ function aplicarIdioma(l) {
     document.documentElement.lang = l;
     btnIdioma.textContent = l === "es" ? "ES / ENG" : "ENG / ES";
     try { localStorage.setItem("idioma", l); } catch (e) {}
-    // Avisa a los scripts con contenido dinámico (p. ej. el teclado del Manual)
+    // Avisa a los scripts con contenido dinámico (teclado del Manual y visor del carrusel)
     document.dispatchEvent(new Event("idioma-cambiado"));
 }
 

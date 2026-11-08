@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nightfall of Grimcliff</title>
+    <meta name="description" content="Sitio oficial de Nightfall of Grimcliff: videojuego Hack and Slash 2D en pixel art. Conoce la historia, los personajes, los mundos y descarga la app complementaria.">
+
+    <!-- Para compartir en redes (cambia la ruta de og:image por una URL absoluta al publicar) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nightfall of Grimcliff">
+    <meta property="og:description" content="Videojuego Hack and Slash 2D en pixel art. Historia, personajes, mundos y app complementaria.">
+    <meta property="og:image" content="./img/baner_pro_1.webp">
 
     <!-- PWA -->
     <link rel="manifest" href="./manifest.webmanifest">
@@ -17,14 +24,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Tipografías obtenidas de Google -->
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=MedievalSharp&family=Cormorant:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=MedievalSharp&family=Cormorant:wght@400;500;600;700&display=swap" rel="stylesheet" crossorigin="anonymous" />
 
     <!-- Tema propio: declara primero el orden de capas, por eso va ANTES de DaisyUI y Tailwind -->
     <link rel="stylesheet" href="css/tema.css" />
 
     <!-- DaisyUI -->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" crossorigin="anonymous"></script>
 
     <!-- Fuentes y SISTEMA DE COMPONENTES (todo el sitio reutiliza estas clases) -->
     <style type="text/tailwindcss">
@@ -48,7 +55,7 @@
 
         <!-- Logo (se minimiza en teléfono) -->
         <a href="#inicio" class="flex items-center gap-2 md:gap-3 min-w-0">
-            <img src="./img/Logo_2.png" alt="Logo de Nightfall of Grimcliff" class="h-10 w-10 md:h-9 md:w-9 shrink-0 object-contain">
+            <img src="./img/Logo_2.webp" alt="Logo de Nightfall of Grimcliff" class="h-10 w-10 md:h-9 md:w-9 shrink-0 object-contain">
             <span class="font-gothic text-base sm:text-xl xl:text-2xl text-primary font-bold truncate">
                 Nightfall of Grimcliff
             </span>
@@ -98,9 +105,10 @@
 
             <!-- Banner -->
             <div class="rounded-box overflow-hidden border border-base-300 shadow-2xl marco-brillo">
-                <img src="./img/baner_pro_1.png"
+                <img src="./img/baner_pro_1.webp"
                      alt="Kaelen frente al castillo de Grimcliff"
                      class="w-full h-auto block"
+                     fetchpriority="high"
                      style="image-rendering: pixelated;">
             </div>
 
@@ -207,18 +215,25 @@
                 Conoce al Héroe de la Luz, al Rey Tirano y a los Aliados de la Penumbra que te guiarán en tu travesía.
             </p>
 
-            <!-- El padding lateral de cada ficha lo controla -->
+            <!-- El padding lateral de cada ficha lo controla css/tema.css.
+                 PARA AGREGAR TUS ARCHIVOS: cada botón (chip) tiene data-media="./ruta/archivo".
+                 Vestuarios y sprites = imágenes PNG SIN FONDO en ./img/  (también puedes usar .gif / .webp animados, o videos .mp4 / .webm)
+                 La luz de detrás del personaje se cambia con style="--luz: ..." en la caja del visor
+                 El visor detecta el tipo por la extensión. Si el archivo aún no existe, se muestra el aviso "pendiente" (y en la consola, F12, aparece "Falta el archivo").
+                 Thorne, Kogan, Zephyrus y Elara son NPC (solo dialogan): no tienen sprites, solo vestuario. -->
             <div class="carousel w-full bg-base-200 border-2 border-base-300 rounded-box shadow-2xl py-4 marco-brillo">
 
                 <!-- KAELEN -->
                 <div id="item1" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
                     <div class="w-full lg:w-4/12">
-                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                        <div class="visor h-60 md:h-[30rem] flex items-center justify-center" style="--luz: var(--color-primary)">
                             <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Kaelen"></video>
-                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                            <img class="visor-img absolute inset-0 w-full h-full object-contain" style="display:none" alt="">
+                            <div class="visor-vacio" style="display:none">
                                 <span class="visor-tipo text-base-content/70">Vestuario</span>
                                 <span class="visor-nombre font-medieval text-primary text-xl font-bold">Kaelen</span>
-                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                                <span class="text-sm text-base-content/60">Imagen o video pendiente</span>
+                                <span class="visor-ruta text-xs text-base-content/50 break-all"></span>
                             </div>
                         </div>
                     </div>
@@ -234,19 +249,19 @@
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
                             <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo de viajero (inicio)" data-video="./video/kaelen-vestuario-atuendo-de-viajero-inicio.mp4">Atuendo de viajero (inicio)</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Armadura arcana (Héroe de la Luz)" data-video="./video/kaelen-vestuario-armadura-arcana-heroe-de-la-luz.mp4">Armadura arcana (Héroe de la Luz)</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo de viajero (inicio)" data-media="./img/kaelen_viajero.webp">Atuendo de viajero (inicio)</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Armadura arcana (Héroe de la Luz)" data-media="./img/kaelen_armadura.webp">Armadura arcana (Héroe de la Luz)</button>
                             </div>
                         </div>
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
                             <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Movimiento" data-video="./video/kaelen-animacion-movimiento.mp4">Movimiento</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Salto" data-video="./video/kaelen-animacion-salto.mp4">Salto</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Esquiva" data-video="./video/kaelen-animacion-esquiva.mp4">Esquiva</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataque con espada" data-video="./video/kaelen-animacion-ataque-con-espada.mp4">Ataque con espada</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Guardia" data-video="./video/kaelen-animacion-guardia.mp4">Guardia</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataque potenciado con Alborada" data-video="./video/kaelen-animacion-ataque-potenciado-con-alborada.mp4">Ataque potenciado con Alborada</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Movimiento" data-media="./img/kaelen_movimiento.webp">Movimiento</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Salto" data-media="./img/kaelen_salto.webp">Salto</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Golpear" data-media="./img/kaelen_golpear.webp">Golpear</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataque con espada" data-media="./img/kaelen_ataque.webp">Ataque con espada</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Muerte" data-media="./img/kaelen_muerte.webp">Muerte</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataque potenciado con Alborada" data-media="./img/kaelen_potenciado.webp">Ataque potenciado con Alborada</button>
                             </div>
                         </div>
                     </div>
@@ -259,12 +274,14 @@
                 <!-- MALAKOR EL CORRUPTO -->
                 <div id="item2" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
                     <div class="w-full lg:w-4/12">
-                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                        <div class="visor h-60 md:h-[30rem] flex items-center justify-center" style="--luz: var(--color-error)">
                             <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Malakor el Corrupto"></video>
-                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                            <img class="visor-img absolute inset-0 w-full h-full object-contain" style="display:none" alt="">
+                            <div class="visor-vacio" style="display:none">
                                 <span class="visor-tipo text-base-content/70">Vestuario</span>
                                 <span class="visor-nombre font-medieval text-error text-xl font-bold">Malakor el Corrupto</span>
-                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                                <span class="text-sm text-base-content/60">Imagen o video pendiente</span>
+                                <span class="visor-ruta text-xs text-base-content/50 break-all"></span>
                             </div>
                         </div>
                     </div>
@@ -280,18 +297,17 @@
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
                             <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo real (antes de la corrupción)" data-video="./video/malakor-vestuario-atuendo-real-antes-de-la-corrupcion.mp4">Atuendo real (antes de la corrupción)</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Forma final alada (corrupción)" data-video="./video/malakor-vestuario-forma-final-alada-corrupcion.mp4">Forma final alada (corrupción)</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo real (antes de la corrupción)" data-media="./img/malakor_real.webp">Atuendo real (antes de la corrupción)</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Forma final alada (corrupción)" data-media="./img/malakor_alado.webp">Forma final alada (corrupción)</button>
                             </div>
                         </div>
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
                             <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataques con mandoble" data-video="./video/malakor-animacion-ataques-con-mandoble.mp4">Ataques con mandoble</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ondas de choque" data-video="./video/malakor-animacion-ondas-de-choque.mp4">Ondas de choque</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Invocación de esbirros" data-video="./video/malakor-animacion-invocacion-de-esbirros.mp4">Invocación de esbirros</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Garras y magia oscura" data-video="./video/malakor-animacion-garras-y-magia-oscura.mp4">Garras y magia oscura</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Derrota (golpe final de Alborada)" data-video="./video/malakor-animacion-derrota-golpe-final-de-alborada.mp4">Derrota (golpe final de Alborada)</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataques con mandoble" data-media="./img/malakor_mandoble.webp">Ataques con mandoble</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ondas de choque" data-media="./img/malakor_ondas.webp">Ondas de choque (Volar)</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Garras y magia oscura" data-media="./img/malakor_garras.webp">Garras y magia oscura</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Derrota (golpe final de Alborada)" data-media="./img/malakor_derrota.webp">Derrota (golpe final de Alborada)</button>
                             </div>
                         </div>
                     </div>
@@ -301,15 +317,17 @@
                     </div>
                 </div>
 
-                <!-- THORNE -->
+                <!-- THORNE (NPC: solo vestuario) -->
                 <div id="item3" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
                     <div class="w-full lg:w-4/12">
-                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                        <div class="visor h-60 md:h-[30rem] flex items-center justify-center" style="--luz: var(--color-secondary)">
                             <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Thorne"></video>
-                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                            <img class="visor-img absolute inset-0 w-full h-full object-contain" style="display:none" alt="">
+                            <div class="visor-vacio" style="display:none">
                                 <span class="visor-tipo text-base-content/70">Vestuario</span>
                                 <span class="visor-nombre font-medieval text-secondary text-xl font-bold">Thorne</span>
-                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                                <span class="text-sm text-base-content/60">Imagen o video pendiente</span>
+                                <span class="visor-ruta text-xs text-base-content/50 break-all"></span>
                             </div>
                         </div>
                     </div>
@@ -325,17 +343,12 @@
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
                             <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-video="./video/thorne-vestuario-armadura-de-comandante-laminas-rojo-vino.mp4">Armadura de comandante: láminas rojo vino, coraza negra y casco verde azulado</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-media="./img/thorne_armadura.webp">Armadura de comandante: láminas rojo vino, coraza negra y casco verde azulado</button>
                             </div>
                         </div>
                         <div>
-                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
-                            <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Combate con espada" data-video="./video/thorne-animacion-combate-con-espada.mp4">Combate con espada</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Guardia" data-video="./video/thorne-animacion-guardia.mp4">Guardia</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Rotura de guardia" data-video="./video/thorne-animacion-rotura-de-guardia.mp4">Rotura de guardia</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Enseñanza de técnicas" data-video="./video/thorne-animacion-ensenanza-de-tecnicas.mp4">Enseñanza de técnicas</button>
-                            </div>
+                            <span class="font-medieval text-base-content/70 text-sm">Sprites y animaciones</span>
+                            <p class="leyenda-npc mt-1">Este personaje es un NPC que guía al jugador mediante diálogos, por lo que no cuenta con sprites ni animaciones.</p>
                         </div>
                     </div>
                     <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
@@ -344,15 +357,17 @@
                     </div>
                 </div>
 
-                <!-- KOGAN -->
+                <!-- KOGAN (NPC: solo vestuario) -->
                 <div id="item4" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
                     <div class="w-full lg:w-4/12">
-                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                        <div class="visor h-60 md:h-[30rem] flex items-center justify-center" style="--luz: var(--color-secondary)">
                             <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Kogan"></video>
-                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                            <img class="visor-img absolute inset-0 w-full h-full object-contain" style="display:none" alt="">
+                            <div class="visor-vacio" style="display:none">
                                 <span class="visor-tipo text-base-content/70">Vestuario</span>
                                 <span class="visor-nombre font-medieval text-secondary text-xl font-bold">Kogan</span>
-                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                                <span class="text-sm text-base-content/60">Imagen o video pendiente</span>
+                                <span class="visor-ruta text-xs text-base-content/50 break-all"></span>
                             </div>
                         </div>
                     </div>
@@ -368,16 +383,12 @@
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
                             <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-video="./video/kogan-vestuario-atuendo-de-armero-comun-tunica-roja-ajus.mp4">Atuendo de armero común: túnica roja ajustada, cuello negro alto y guantes oscuros</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-media="./img/kogan_armero.webp">Atuendo de armero común: túnica roja ajustada, cuello negro alto y guantes oscuros</button>
                             </div>
                         </div>
                         <div>
-                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
-                            <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Forja" data-video="./video/kogan-animacion-forja.mp4">Forja</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Refuerzo de la armadura" data-video="./video/kogan-animacion-refuerzo-de-la-armadura.mp4">Refuerzo de la armadura</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Entrega de la espada" data-video="./video/kogan-animacion-entrega-de-la-espada.mp4">Entrega de la espada</button>
-                            </div>
+                            <span class="font-medieval text-base-content/70 text-sm">Sprites y animaciones</span>
+                            <p class="leyenda-npc mt-1">Este personaje es un NPC que guía al jugador mediante diálogos, por lo que no cuenta con sprites ni animaciones.</p>
                         </div>
                     </div>
                     <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
@@ -386,15 +397,17 @@
                     </div>
                 </div>
 
-                <!-- ZEPHYRUS -->
+                <!-- ZEPHYRUS (NPC: solo vestuario) -->
                 <div id="item5" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
                     <div class="w-full lg:w-4/12">
-                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                        <div class="visor h-60 md:h-[30rem] flex items-center justify-center" style="--luz: var(--color-secondary)">
                             <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Zephyrus"></video>
-                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                            <img class="visor-img absolute inset-0 w-full h-full object-contain" style="display:none" alt="">
+                            <div class="visor-vacio" style="display:none">
                                 <span class="visor-tipo text-base-content/70">Vestuario</span>
                                 <span class="visor-nombre font-medieval text-secondary text-xl font-bold">Zephyrus</span>
-                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                                <span class="text-sm text-base-content/60">Imagen o video pendiente</span>
+                                <span class="visor-ruta text-xs text-base-content/50 break-all"></span>
                             </div>
                         </div>
                     </div>
@@ -410,16 +423,12 @@
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
                             <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-video="./video/zephyrus-vestuario-tunica-de-mago-exiliado-gris-y-violeta-c.mp4">Túnica de mago exiliado: gris y violeta con runas doradas, capucha y bastón</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-media="./img/zephyrus_tunica.webp">Túnica de mago exiliado: gris y violeta con runas doradas, capucha y bastón</button>
                             </div>
                         </div>
                         <div>
-                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
-                            <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Conjuros de repulsión" data-video="./video/zephyrus-animacion-conjuros-de-repulsion.mp4">Conjuros de repulsión</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Grabado de runas protectoras" data-video="./video/zephyrus-animacion-grabado-de-runas-protectoras.mp4">Grabado de runas protectoras</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Disipación de niebla y barreras" data-video="./video/zephyrus-animacion-disipacion-de-niebla-y-barreras.mp4">Disipación de niebla y barreras</button>
-                            </div>
+                            <span class="font-medieval text-base-content/70 text-sm">Sprites y animaciones</span>
+                            <p class="leyenda-npc mt-1">Este personaje es un NPC que guía al jugador mediante diálogos, por lo que no cuenta con sprites ni animaciones.</p>
                         </div>
                     </div>
                     <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
@@ -428,15 +437,17 @@
                     </div>
                 </div>
 
-                <!-- ELARA -->
+                <!-- ELARA (NPC: solo vestuario) -->
                 <div id="item6" class="carousel-item box-border relative w-full flex flex-col lg:flex-row gap-8 items-center scroll-mt-24 py-8">
                     <div class="w-full lg:w-4/12">
-                        <div class="relative h-60 md:h-[30rem] bg-base-300 rounded-box overflow-hidden flex items-center justify-center visor-marco">
+                        <div class="visor h-60 md:h-[30rem] flex items-center justify-center" style="--luz: var(--color-secondary)">
                             <video class="visor-video absolute inset-0 w-full h-full object-contain" style="display:none" muted loop playsinline preload="none" aria-label="Video de Elara"></video>
-                            <div class="visor-vacio flex flex-col items-center justify-center text-center p-4 gap-1">
+                            <img class="visor-img absolute inset-0 w-full h-full object-contain" style="display:none" alt="">
+                            <div class="visor-vacio" style="display:none">
                                 <span class="visor-tipo text-base-content/70">Vestuario</span>
                                 <span class="visor-nombre font-medieval text-secondary text-xl font-bold">Elara</span>
-                                <span class="text-sm text-base-content/60">Video pendiente</span>
+                                <span class="text-sm text-base-content/60">Imagen o video pendiente</span>
+                                <span class="visor-ruta text-xs text-base-content/50 break-all"></span>
                             </div>
                         </div>
                     </div>
@@ -452,16 +463,12 @@
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
                             <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-video="./video/elara-vestuario-atuendo-de-sanadora-errante-gris-oscuro-.mp4">Atuendo de sanadora errante: gris oscuro con detalles azules y botas de combate</button>
+                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-media="./img/elara_sanadora.webp">Atuendo de sanadora errante: gris oscuro con detalles azules y botas de combate</button>
                             </div>
                         </div>
                         <div>
-                            <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
-                            <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Canalización de vitalidad" data-video="./video/elara-animacion-canalizacion-de-vitalidad.mp4">Canalización de vitalidad</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Medicina botánica arcana" data-video="./video/elara-animacion-medicina-botanica-arcana.mp4">Medicina botánica arcana</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Entrega de elixires y ungüentos" data-video="./video/elara-animacion-entrega-de-elixires-y-unguentos.mp4">Entrega de elixires y ungüentos</button>
-                            </div>
+                            <span class="font-medieval text-base-content/70 text-sm">Sprites y animaciones</span>
+                            <p class="leyenda-npc mt-1">Este personaje es un NPC que guía al jugador mediante diálogos, por lo que no cuenta con sprites ni animaciones.</p>
                         </div>
                     </div>
                     <div class="absolute left-2 right-2 top-1/2 flex justify-between pointer-events-none">
@@ -491,11 +498,8 @@
 
             <!-- Nivel 1 -->
             <article class="tarjeta flex flex-col md:flex-row gap-6">
-                <!-- <img src="img/nivel1.png" alt="Captura: El Bosque Oscuro" class="w-full h-full object-cover rounded-box"> -->
-                <div class="media-slot w-full md:w-5/12 h-auto aspect-[16/10] md:aspect-[4/3] p-4">
-                    <span class="font-medieval text-accent text-lg font-bold text-center">Captura: El Bosque Oscuro</span>
-                </div>
-                <div class="w-full md:w-7/12 space-y-3 text-lg leading-relaxed">
+                <img src="./img/nivel1.webp" width="1756" height="780" alt="El Bosque Oscuro" loading="lazy" class="nivel-img visor-marco">
+                <div class="w-full md:w-7/12 flex flex-col justify-center gap-3 text-lg leading-relaxed">
                     <h3 class="tarjeta-titulo cabecera">Nivel 1: El Bosque Oscuro (Las Penumbras)</h3>
                     <p><strong class="font-medieval text-primary">Descripción:</strong> Bosque de árboles retorcidos, neblina densa y ruinas cubiertas de musgo, apenas iluminado por una luna tenue. Es el nivel tutorial: exploración, sigilo y acertijos al aire libre.</p>
                     <p><strong class="font-medieval text-primary">Objetivos:</strong> Aprender las mecánicas, encontrar a los cuatro aliados para conseguir el mapa y los ítems, y obtener la espada <span class="font-medieval text-primary">Alborada</span>.</p>
@@ -506,11 +510,8 @@
 
             <!-- Nivel 2 -->
             <article class="tarjeta flex flex-col md:flex-row gap-6">
-                <!-- <img src="img/nivel2.png" alt="Captura: El Castillo de Grimcliff" class="w-full h-full object-cover rounded-box"> -->
-                <div class="media-slot w-full md:w-5/12 h-auto aspect-[16/10] md:aspect-[4/3] p-4">
-                    <span class="font-medieval text-secondary text-lg font-bold text-center">Captura: El Castillo de Grimcliff</span>
-                </div>
-                <div class="w-full md:w-7/12 space-y-3 text-lg leading-relaxed">
+                <img src="./img/nivel2.webp" width="1762" height="782" alt="El Castillo de Grimcliff" loading="lazy" class="nivel-img visor-marco">
+                <div class="w-full md:w-7/12 flex flex-col justify-center gap-3 text-lg leading-relaxed">
                     <h3 class="tarjeta-titulo cabecera">Nivel 2: El Castillo de Grimcliff</h3>
                     <p><strong class="font-medieval text-primary">Descripción:</strong> Fortaleza gótica de piedra oscura, con salones de varios pisos, tapices rasgados y antorchas que crean pozas de luz cálida. Es un espacio cerrado de infiltración y combate, con trampas de fuego y pinchos.</p>
                     <p><strong class="font-medieval text-primary">Objetivos:</strong> Superar los obstáculos y derrotar a la guardia del rey, habitación por habitación, hasta llegar a las puertas de la sala del trono.</p>
@@ -521,14 +522,12 @@
 
             <!-- Nivel 3 -->
             <article class="tarjeta flex flex-col md:flex-row gap-6">
-                <!-- <img src="img/nivel3.png" alt="Captura: El Trono de la Noche Eterna" class="w-full h-full object-cover rounded-box"> -->
-                <div class="media-slot w-full md:w-5/12 h-auto aspect-[16/10] md:aspect-[4/3] p-4">
-                    <span class="font-medieval text-error text-lg font-bold text-center">Captura: El Trono de la Noche Eterna</span>
-                </div>
-                <div class="w-full md:w-7/12 space-y-3 text-lg leading-relaxed">
+                <img src="./img/nivel3.webp" width="1757" height="785" alt="El Trono de la Noche Eterna" loading="lazy" class="nivel-img visor-marco">
+                <div class="w-full md:w-7/12 flex flex-col justify-center gap-3 text-lg leading-relaxed">
                     <h3 class="tarjeta-titulo cabecera">Nivel 3: El Trono de la Noche Eterna</h3>
-                    <p><strong class="font-medieval text-primary">Descripción:</strong> Una sola sala con plataformas, un trono rojo, candelabros, estandartes y columnas enormes. El suelo y los muros se agrietan a medida que avanza el combate.</p>
-                    <p><strong class="font-medieval text-primary">Objetivos:</strong> Derrotar a Malakor en un combate de tres fases (el rey guerrero, las sombras del rey y la criatura alada) para restaurar la luz en el reino.</p>
+                    <p><strong class="font-medieval text-primary">Descripción:</strong> Tras recorrer algunos pasillos del castillo, Kaelen llega a una sola sala con plataformas, un trono rojo, candelabros, estandartes y columnas enormes. El suelo y los muros se agrietan a medida que avanza el combate.</p>
+                    <p><strong class="font-medieval text-primary">Objetivos:</strong> Recorrer los últimos pasillos hasta llegar a la sala del trono y derrotar a Malakor en un combate de tres fases (el rey guerrero, las sombras del rey y la criatura alada) para restaurar la luz en el reino.</p>
+                    <p><strong class="font-medieval text-primary">Zonas:</strong> pasillos finales, puertas de la sala del trono y sala del trono.</p>
                     <p class="text-base text-base-content/80 pt-2 border-t border-base-300"><strong class="font-medieval">Personajes involucrados:</strong> Kaelen, Malakor el Corrupto y los esbirros de sombra.</p>
                 </div>
             </article>
@@ -557,50 +556,51 @@
                 <div class="p-3 sm:p-6 md:p-8">
 
                     <!-- Controles: teclado interactivo -->
-                    <div data-panel="0" class="grid lg:grid-cols-5 gap-8 items-center">
-                        <div class="lg:col-span-3 space-y-4">
+                    <div data-panel="0" class="space-y-4">
                             <h3 class="tarjeta-titulo cabecera">Controles (PC)</h3>
-                            <p class="text-base text-base-content/80">Toca una tecla o púlsala en tu teclado para ver qué hace. <span class="font-medieval text-primary">Teclas provisionales</span>, pueden cambiar.</p>
+                            <p class="text-base text-base-content/80">Toca una tecla o púlsala en tu teclado para ver qué hace.</p>
 
-                            <div class="bg-base-300/60 rounded-box p-3 sm:p-6 flex flex-wrap justify-center items-end gap-x-10 gap-y-6">
+                        <div class="grid lg:grid-cols-5 gap-8 items-stretch">
 
-                                <div class="space-y-2">
+                            <div class="lg:col-span-3 bg-base-300/60 rounded-box p-4 sm:p-8 flex flex-wrap justify-center items-end gap-x-14 gap-y-10">
+                                <div class="space-y-4">
                                     <span class="font-medieval text-xs text-base-content/70 block">Movimiento</span>
-                                    <div class="flex flex-wrap gap-2">
-                                        <button type="button" class="tecla tecla-media" data-key="control" data-label="Ctrl" data-titulo="Sigilo" data-desc="Avance lento y agachado." data-titulo-en="Stealth" data-desc-en="Slow, crouched advance."><span>Ctrl</span><small>Sigilo</small></button>
-                                        <button type="button" class="tecla" data-key="a" data-label="A" data-titulo="Movimiento" data-desc="Desplazamiento lateral hacia la izquierda." data-titulo-en="Movement" data-desc-en="Lateral movement to the left."><span>A</span><small>Izquierda</small></button>
-                                        <button type="button" class="tecla" data-key="d" data-label="D" data-titulo="Movimiento" data-desc="Desplazamiento lateral hacia la derecha." data-titulo-en="Movement" data-desc-en="Lateral movement to the right."><span>D</span><small>Derecha</small></button>
-                                    </div>
-                                    <div class="flex flex-wrap gap-2">
-                                        <button type="button" class="tecla tecla-media" data-key="shift" data-label="Shift" data-titulo="Esquiva" data-desc="Movimiento rápido con breve inmunidad." data-titulo-en="Dodge" data-desc-en="A quick move with brief invulnerability."><span>Shift</span><small>Esquiva</small></button>
-                                        <button type="button" class="tecla tecla-ancha" data-key=" " data-label="Espacio" data-label-en="Space" data-titulo="Salto" data-desc="Para superar troncos, raíces y plataformas." data-titulo-en="Jump" data-desc-en="To clear logs, roots and platforms."><span>Espacio</span><small>Salto</small></button>
+                                    <div class="flex flex-wrap gap-4">
+                                        <button type="button" class="tecla tecla-media" data-key="a,d,arrowleft,arrowright" data-label="A / D · ←/→" data-titulo="Caminar" data-desc="Desplazamiento lateral hacia la izquierda y la derecha." data-titulo-en="Walk" data-desc-en="Lateral movement to the left and right."><span>A / D · ←/→</span><small>Caminar</small></button>
+                                        <button type="button" class="tecla tecla-ancha" data-key=" " data-label="Espacio" data-label-en="Space" data-titulo="Saltar" data-desc="Para superar troncos, raíces y plataformas." data-titulo-en="Jump" data-desc-en="To clear logs, roots and platforms."><span>Espacio</span><small>Saltar</small></button>
+                                        <button type="button" class="tecla" data-key="s" data-label="S" data-titulo="Sigilo" data-desc="Avance lento y agachado." data-titulo-en="Stealth" data-desc-en="Slow, crouched advance."><span>S</span><small>Sigilo</small></button>
+                                        <button type="button" class="tecla tecla-media" data-key="shift" data-label="Shift" data-titulo="Esquivar" data-desc="Movimiento rápido con breve inmunidad." data-titulo-en="Dodge" data-desc-en="A quick move with brief invulnerability."><span>Shift</span><small>Esquivar</small></button>
                                     </div>
                                 </div>
 
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <span class="font-medieval text-xs text-base-content/70 block">Combate</span>
-                                    <div class="flex flex-wrap gap-2">
-                                        <button type="button" class="tecla" data-key="j" data-label="J" data-titulo="Ataque básico" data-desc="Golpe con la espada, que se encadena en un combo corto." data-titulo-en="Basic attack" data-desc-en="A sword strike that chains into a short combo."><span>J</span><small>Ataque</small></button>
-                                        <button type="button" class="tecla" data-key="k" data-label="K" data-titulo="Guardia" data-desc="Bloqueo de ataques frontales." data-titulo-en="Guard" data-desc-en="Blocks frontal attacks."><span>K</span><small>Guardia</small></button>
-                                        <button type="button" class="tecla" data-key="l" data-label="L" data-titulo="Ataque potenciado" data-desc="Golpe cargado con Alborada." data-titulo-en="Powered attack" data-desc-en="A charged strike with Alborada."><span>L</span><small>Potenciado</small></button>
+                                    <div class="flex flex-wrap gap-4">
+                                        <button type="button" class="tecla tecla-media" data-key="j" data-label="J / clic izq." data-label-en="J / left click" data-titulo="Atacar / cargar" data-desc="Golpe con la espada, que se encadena en un combo corto. Mantén pulsado para cargar un golpe potenciado con Alborada." data-titulo-en="Attack / charge" data-desc-en="A sword strike that chains into a short combo. Hold to charge a strike powered by Alborada."><span>J / clic izq.</span><small>Atacar / cargar</small></button>
+                                        <button type="button" class="tecla tecla-media" data-key="c" data-label="C / rueda" data-label-en="C / wheel" data-titulo="Guardia" data-desc="Bloqueo de ataques frontales." data-titulo-en="Guard" data-desc-en="Blocks frontal attacks."><span>C / rueda</span><small>Guardia</small></button>
+                                        <button type="button" class="tecla" data-key="l" data-label="L" data-titulo="Romper defensa" data-desc="Técnica de Thorne que rompe la defensa de los enemigos con escudo y la de Malakor." data-titulo-en="Break guard" data-desc-en="A technique from Thorne that breaks the defense of shielded enemies and of Malakor."><span>L</span><small>Romper defensa</small></button>
                                     </div>
                                 </div>
 
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <span class="font-medieval text-xs text-base-content/70 block">Acciones</span>
-                                    <div class="flex flex-wrap gap-2">
-                                        <button type="button" class="tecla" data-key="e" data-label="E" data-titulo="Interacción y diálogo" data-desc="Para hablar con los aliados." data-titulo-en="Interaction and dialogue" data-desc-en="To talk with the allies."><span>E</span><small>Hablar</small></button>
-                                        <button type="button" class="tecla" data-key="q" data-label="Q" data-titulo="Uso de ítems" data-desc="Elixires, runas y llaves." data-titulo-en="Item use" data-desc-en="Elixirs, runes and keys."><span>Q</span><small>Ítems</small></button>
+                                    <div class="flex flex-wrap gap-4">
+                                        <button type="button" class="tecla" data-key="e" data-label="E" data-titulo="Hablar / abrir" data-desc="Para hablar con los aliados y abrir las puertas del castillo." data-titulo-en="Talk / open" data-desc-en="To talk with the allies and open the castle doors."><span>E</span><small>Hablar / abrir</small></button>
+                                        <button type="button" class="tecla" data-key="q" data-label="Q" data-titulo="Usar elixir" data-desc="Restaura salud con los elixires de Elara." data-titulo-en="Use elixir" data-desc-en="Restores health with Elara's elixirs."><span>Q</span><small>Usar elixir</small></button>
+                                        <button type="button" class="tecla" data-key="f" data-label="F" data-titulo="Activar runa" data-desc="Usa una runa de Zephyrus: disipa una barrera mágica o absorbe un golpe de magia oscura." data-titulo-en="Activate rune" data-desc-en="Use a Zephyrus rune: it dispels a magical barrier or absorbs a dark magic hit."><span>F</span><small>Activar runa</small></button>
+                                        <button type="button" class="tecla" data-key="m" data-label="M" data-titulo="Abrir mapa" data-desc="Muestra el mapa del bosque con la ruta hacia los aliados." data-titulo-en="Open map" data-desc-en="Shows the forest map with the route to the allies."><span>M</span><small>Abrir mapa</small></button>
+                                        <button type="button" class="tecla" data-key="v" data-label="V" data-titulo="Sonido" data-desc="Activa o desactiva el sonido." data-titulo-en="Sound" data-desc-en="Turns the sound on or off."><span>V</span><small>Sonido</small></button>
                                     </div>
                                 </div>
+
                             </div>
-                        </div>
 
                         <!-- Detalle de la tecla elegida -->
-                        <div class="lg:col-span-2 bg-base-300 rounded-box p-6 text-center space-y-4 min-h-[16rem] flex flex-col items-center justify-center">
-                            <span id="det-tecla" data-no-i18n class="tecla activa pointer-events-none tecla-media" style="height:5rem;font-size:1.6rem">A</span>
-                            <h4 id="det-titulo" data-no-i18n class="font-medieval text-2xl text-primary font-bold">Movimiento</h4>
-                            <p id="det-desc" data-no-i18n class="text-lg leading-relaxed">Desplazamiento lateral.</p>
+                        <div class="lg:col-span-2 bg-base-300 rounded-box p-6 sm:p-8 text-center space-y-6 min-h-[16rem] flex flex-col items-center justify-center">
+                            <span id="det-tecla" data-no-i18n class="tecla activa pointer-events-none tecla-media max-w-full" style="height:6.5rem;font-size:2.1rem;padding:0 1.5rem">A</span>
+                            <h4 id="det-titulo" data-no-i18n class="font-medieval text-3xl md:text-4xl text-primary font-bold">Movimiento</h4>
+                            <p id="det-desc" data-no-i18n class="text-xl md:text-2xl leading-relaxed">Desplazamiento lateral.</p>
+                        </div>
                         </div>
                     </div>
 
@@ -718,15 +718,19 @@
                     new IntersectionObserver((e) => { visible = e[0].isIntersecting; }, { threshold: 0.2 }).observe(ui);
                     document.addEventListener('keydown', (e) => {
                         if (!visible || panelActual !== 0) return;
-                        if (e.ctrlKey && e.key !== 'Control') return;   // para no interferir con Ctrl+C, Ctrl+F...
                         const k = e.key.toLowerCase();
-                        const el = [...teclas].find((t) => t.dataset.key === k);
+                        if (e.ctrlKey || e.metaKey || e.altKey) return;   // no interferir con Ctrl/Cmd+C, F, A...
+                        const el = [...teclas].find((t) => t.dataset.key.split(',').includes(k));
                         if (!el) return;
-                        if (k === ' ') e.preventDefault();               // evita que la página baje con espacio
+                        if (k === ' ') {
+                            // Fuera del manual, Espacio sigue haciendo scroll en la página
+                            if (!ui.contains(document.activeElement)) return;
+                            e.preventDefault();
+                        }
                         elegir(el);
                     });
 
-                    elegir(teclas[1]);
+                    elegir(teclas[0]);
                 })();
             </script>
         </section>
@@ -743,7 +747,7 @@
                 <!-- Hitos y logros (imagen a la izquierda) -->
                 <article id="hitos" class="tarjeta flex flex-col md:flex-row items-center gap-8 md:min-h-[26rem]">
                     <div class="media-slot halo">
-                        <img src="./img/Hitos_logros.png" alt="Hitos y logros" class="w-full h-full object-contain">
+                        <img src="./img/Hitos_logros.webp" alt="Hitos y logros" loading="lazy" class="w-full h-full object-contain">
                     </div>
 
                     <div class="flex-1 min-w-0 w-full space-y-5">
@@ -780,7 +784,7 @@
                 <!-- Desafíos especiales (imagen a la derecha) -->
                 <article id="desafios" class="tarjeta flex flex-col md:flex-row-reverse items-center gap-8 md:min-h-[26rem]">
                     <div class="media-slot halo">
-                        <img src="./img/Desafios_especiales.png" alt="Desafíos especiales" class="w-full h-full object-contain">
+                        <img src="./img/Desafios_especiales.webp" alt="Desafíos especiales" loading="lazy" class="w-full h-full object-contain">
                     </div>
                     <div class="flex-1 min-w-0 w-full space-y-5">
                         <div class="cabecera"><h3 class="tarjeta-titulo">Desafíos especiales</h3><p class="text-base sm:text-lg text-base-content/80">Logros opcionales para los jugadores que buscan poner a prueba su habilidad.</p></div>
@@ -796,7 +800,7 @@
                 <!-- Recompensas (imagen a la izquierda) -->
                 <article id="recompensas" class="tarjeta flex flex-col md:flex-row items-center gap-8 md:min-h-[26rem]">
                     <div class="media-slot halo">
-                        <img src="./img/Recompensas.png" alt="Recompensas" class="w-full h-full object-contain">
+                        <img src="./img/Recompensas.webp" alt="Recompensas" loading="lazy" class="w-full h-full object-contain">
                     </div>
                     <div class="flex-1 min-w-0 w-full space-y-5">
                         <div class="cabecera"><h3 class="tarjeta-titulo">Recompensas</h3><p class="text-base sm:text-lg text-base-content/80">Récords de tiempo y reconocimientos que obtienes al avanzar en el juego.</p></div>
@@ -818,73 +822,27 @@
                 La app complementaria de Nightfall of Grimcliff: consulta tu puntaje, conoce a los personajes, compite en el ranking y conecta con la comunidad.
             </p>
 
-            <svg width="0" height="0" class="absolute" aria-hidden="true">
-                <defs>
-                    <linearGradient id="gLuna" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD9A8"/><stop offset="1" stop-color="#E07A3F"/></linearGradient>
-                    <mask id="mLuna"><rect width="100" height="100" fill="#fff"/><circle cx="64" cy="40" r="34" fill="#000"/></mask>
-                    <symbol id="luna" viewBox="0 0 100 100">
-                        <circle cx="46" cy="50" r="40" fill="url(#gLuna)" mask="url(#mLuna)"/>
-                        <path d="M30 80 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5z" fill="#FCD9A8"/>
-                    </symbol>
-                </defs>
-            </svg>
 
             <div class="grid lg:grid-cols-2 gap-8 items-stretch">
 
-                <!-- Celular con pantallas (provisional) -->
+                <!-- Celular con capturas de la app -->
                 <div class="flex flex-col items-center gap-4 h-full">
                     <div class="relative w-64 md:w-72 aspect-[9/19] rounded-[2.5rem] border-[10px] border-[var(--app-surface)] bg-[var(--app-bg)] shadow-2xl overflow-hidden ring-1 ring-[var(--app-muted)]/50">
                         <div class="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-full z-10"></div>
 
-                        <div data-pantalla="splash" class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-[var(--app-surface)] to-[var(--app-bg)]">
-                            <svg class="w-24 h-24" viewBox="0 0 100 100"><use href="#luna"/></svg>
-                            <span class="font-medieval text-[var(--app-accent)] text-lg text-center px-4">Nightfall of Grimcliff</span>
-                        </div>
-
-                        <div data-pantalla="puntaje" class="absolute inset-0 hidden bg-[var(--app-bg)]">
-                            <div class="flex items-center justify-between px-3 pt-8 pb-2">
-                                <div class="flex items-center gap-1"><svg class="w-5 h-5" viewBox="0 0 100 100"><use href="#luna"/></svg><span class="font-medieval text-[var(--app-accent)] text-[10px]">Nightfall of Grimcliff</span></div>
-                                <span class="text-[var(--app-accent)] text-lg leading-none">☰</span>
-                            </div>
-                            <p class="text-center font-medieval text-[var(--app-text)] text-2xl mt-4">PUNTAJE</p>
-                            <svg viewBox="0 0 100 100" class="w-44 mx-auto mt-4">
-                                <circle cx="50" cy="50" r="40" fill="none" style="stroke: var(--app-muted)" stroke-width="5" stroke-dasharray="188.5 251.3" transform="rotate(135 50 50)"/>
-                                <circle cx="50" cy="50" r="40" fill="none" style="stroke: var(--app-accent-2)" stroke-width="5" stroke-dasharray="94.2 251.3" transform="rotate(135 50 50)"/>
-                                <text x="50" y="58" text-anchor="middle" style="fill: var(--app-text)" font-size="22">50</text>
-                            </svg>
-                            <div class="absolute bottom-0 inset-x-0 h-1/4 bg-gradient-to-t from-[var(--app-muted)]/30 to-transparent"></div>
-                        </div>
-
-                        <div data-pantalla="ranking" class="absolute inset-0 hidden bg-[var(--app-bg)]">
-                            <div class="flex items-center justify-between px-3 pt-8 pb-2">
-                                <div class="flex items-center gap-1"><svg class="w-5 h-5" viewBox="0 0 100 100"><use href="#luna"/></svg><span class="font-medieval text-[var(--app-accent)] text-[10px]">Nightfall of Grimcliff</span></div>
-                                <span class="text-[var(--app-accent)] text-lg leading-none">☰</span>
-                            </div>
-                            <p class="text-center font-medieval text-[var(--app-text)] text-xl mt-3">Mejores Jugadores</p>
-                            <ol class="mx-3 mt-4 rounded-lg bg-[var(--app-surface)] border border-[var(--app-muted)]/60 text-[var(--app-text)] text-xs divide-y divide-[var(--app-muted)]/40">
-                                <li class="flex justify-between px-3 py-2"><span>1. Jugador1</span><span class="text-[var(--app-accent)]">980</span></li>
-                                <li class="flex justify-between px-3 py-2"><span>2. Jugador2</span><span class="text-[var(--app-accent)]">910</span></li>
-                                <li class="flex justify-between px-3 py-2"><span>3. Jugador3</span><span class="text-[var(--app-accent)]">875</span></li>
-                                <li class="flex justify-between px-3 py-2"><span>4. Jugador4</span><span class="text-[var(--app-accent)]">820</span></li>
-                                <li class="flex justify-between px-3 py-2"><span>5. Jugador5</span><span class="text-[var(--app-accent)]">790</span></li>
-                            </ol>
-                        </div>
-
-                        <div data-pantalla="personajes" class="absolute inset-0 hidden bg-[var(--app-bg)]">
-                            <div class="flex items-center justify-between px-3 pt-8 pb-2">
-                                <div class="flex items-center gap-1"><svg class="w-5 h-5" viewBox="0 0 100 100"><use href="#luna"/></svg><span class="font-medieval text-[var(--app-accent)] text-[10px]">Nightfall of Grimcliff</span></div>
-                                <span class="text-[var(--app-accent)] text-lg leading-none">☰</span>
-                            </div>
-                            <p class="text-center font-medieval text-[var(--app-text)] text-sm mt-3 px-4">Descubre la oscuridad que gobierna Grimcliff</p>
-                            <div class="mx-3 mt-4 rounded-lg bg-[var(--app-surface)] border border-[var(--app-muted)]/60 p-3 text-[var(--app-text)] text-[10px] space-y-1">
-                                <div class="flex gap-2">
-                                    <div class="w-16 h-20 bg-black flex items-center justify-center text-center">Foto del personaje</div>
-                                    <div class="space-y-1"><p class="font-medieval text-[var(--app-accent)] text-xs">Kaelen</p><p>Edad: --</p><p>Puntos fuertes: --</p><p>Puntos débiles: --</p></div>
-                                </div>
-                                <p class="pt-1">Historia: texto provisional.</p>
-                            </div>
-                            <div class="flex justify-between mx-4 mt-3 text-[var(--app-muted)] text-[10px]"><span>← Anterior</span><span>Siguiente →</span></div>
-                        </div>
+                        <!-- Capturas reales de la app (el script del final solo alterna la clase "hidden" por data-pantalla) -->
+                        <img data-pantalla="splash" src="./img/app_inicio.webp" width="576" height="1211"
+                             alt="Pantalla de inicio de la app: Crear cuenta e Iniciar sesión"
+                             class="absolute inset-0 w-full h-full object-cover">
+                        <img data-pantalla="puntaje" src="./img/app_puntaje.webp" width="576" height="1217"
+                             alt="Pantalla de puntaje de la app con medidor de poder"
+                             class="hidden absolute inset-0 w-full h-full object-cover">
+                        <img data-pantalla="ranking" src="./img/app_ranking.webp" width="576" height="1213"
+                             alt="Tabla de posiciones de la app con los mejores jugadores"
+                             class="hidden absolute inset-0 w-full h-full object-cover">
+                        <img data-pantalla="personajes" src="./img/app_personajes.webp" width="576" height="1215"
+                             alt="Ficha de personaje de la app: Lord Malakor"
+                             class="hidden absolute inset-0 w-full h-full object-cover">
                     </div>
 
                     <div id="tabs-app" class="flex flex-wrap justify-center gap-2 font-medieval">
@@ -977,7 +935,8 @@
     </footer>
 
     <!-- ========= TRADUCCIÓN ES / ENG (archivo externo) ========= -->
-    <script src="./js/traduccion.js?v=4"></script>
+    <!-- Sube el número ?v= cuando cambies traduccion.js (y igualo en sw.js) -->
+    <script src="./js/traduccion.js?v=6"></script>
 
     <!-- ========= IDIOMA DEL DOCUMENTO (accesibilidad) ========= -->
     <script>
@@ -1026,44 +985,89 @@
             a.addEventListener("click", (ev) => {
                 ev.preventDefault();
                 const destino = document.querySelector(a.getAttribute("href"));
-                carrusel.scrollTo({ left: destino.offsetLeft, behavior: "smooth" });
+                // inline:'start' mueve solo el carrusel; block:'nearest' evita saltos verticales de la página
+                destino.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
             });
         });
     </script>
 
-    <!-- ========= ESPACIO DE VIDEO DE PERSONAJES (vestuarios y animaciones) ========= -->
+    <!-- ========= VISOR DE IMAGEN Y VIDEO DE PERSONAJES (vestuarios y animaciones) ========= -->
     <script>
         document.querySelectorAll('#personajes .carousel-item').forEach((item) => {
             const video = item.querySelector('.visor-video');
+            const imagen = item.querySelector('.visor-img');
             const vacio = item.querySelector('.visor-vacio');
             const tipo = item.querySelector('.visor-tipo');
             const nombre = item.querySelector('.visor-nombre');
-            const nombreBase = nombre.textContent;   
+            const rutaEl = item.querySelector('.visor-ruta');
+            const nombreBase = nombre.textContent;
             const chips = item.querySelectorAll('.chip-sel');
+            let actual = null;
 
-            function mostrarVacio() { video.style.display = 'none'; vacio.style.display = ''; }
+            const enIng = () => typeof idioma !== 'undefined' && idioma === 'en';
+            const esVideo = (ruta) => /\.(mp4|webm|ogv|mov)(\?.*)?$/i.test(ruta);
 
-            function elegir(chip) {
-                chips.forEach((c) => c.setAttribute('aria-pressed', c === chip));
-                tipo.textContent = chip.dataset.tipo === 'vestuario' ? 'Vestuario' : 'Animación';
-                nombre.textContent = chip.dataset.nombre || nombreBase;
-                mostrarVacio();
-                video.preload = 'auto';  
-                video.src = chip.dataset.video;
-                video.load();
+            // Muestra el aviso "pendiente" (el estilo de .visor-vacio está en tema.css)
+            function mostrarVacio() {
+                video.style.display = 'none';
+                imagen.style.display = 'none';
+                vacio.style.display = '';
             }
 
-            // Si el archivo existe, se muestra el video; si no carga queda un aviso
+            // Escribe el tipo (Vestuario / Animación) y el nombre, en el idioma actual
+            function rotular(chip) {
+                const esVest = chip.dataset.tipo === 'vestuario';
+                tipo.textContent = esVest ? (enIng() ? 'Outfit' : 'Vestuario') : (enIng() ? 'Animation' : 'Animación');
+                nombre.textContent = chip.dataset.nombre ? chip.textContent.trim() : nombreBase;
+            }
+
+            function elegir(chip) {
+                actual = chip;
+                chips.forEach((c) => c.setAttribute('aria-pressed', c === chip));
+                rotular(chip);
+                const ruta = chip.dataset.media || chip.dataset.video;   // data-video sigue funcionando
+                rutaEl.textContent = ruta ? 'Archivo: ' + ruta : '';
+                // El aviso "pendiente" solo se muestra si no hay ruta o si el archivo falla (listener "error")
+                if (!ruta) { mostrarVacio(); return; }
+                if (esVideo(ruta)) {
+                    imagen.removeAttribute('src');
+                    video.preload = 'auto';   // con preload="none" el evento loadeddata no se dispara
+                    video.src = ruta;
+                    video.load();
+                } else {
+                    video.pause();
+                    video.removeAttribute('src');
+                    video.load();
+                    imagen.alt = chip.textContent.trim();
+                    imagen.src = ruta;
+                }
+            }
+
+            // Si el archivo existe se muestra; si no carga queda el aviso "pendiente"
             video.addEventListener('loadeddata', () => {
+                imagen.style.display = 'none';
                 vacio.style.display = 'none';
                 video.style.display = 'block';
                 video.play().catch(() => {});
             });
-            video.addEventListener('error', mostrarVacio);
+            imagen.addEventListener('load', () => {
+                video.style.display = 'none';
+                vacio.style.display = 'none';
+                imagen.style.display = 'block';
+            });
+            const falta = (el) => () => {
+                if (el.getAttribute('src')) console.warn('Falta el archivo:', el.getAttribute('src'));
+                mostrarVacio();
+            };
+            video.addEventListener('error', falta(video));
+            imagen.addEventListener('error', falta(imagen));
 
             chips.forEach((c) => c.addEventListener('click', () => elegir(c)));
 
-            // El primer video de cada ficha se carga solo cuando la ficha entra en pantalla
+            // Al cambiar de idioma, vuelve a escribir el rótulo del visor
+            document.addEventListener('idioma-cambiado', () => { if (actual) rotular(actual); });
+
+            // El primer archivo de cada ficha se carga solo cuando la ficha entra en pantalla
             const alVer = new IntersectionObserver((e) => {
                 if (e[0].isIntersecting) { elegir(chips[0]); alVer.disconnect(); }
             }, { root: carrusel, threshold: 0.6 });
@@ -1081,6 +1085,11 @@
 
         let promptInstalacion = null;
         const btnPwa = document.getElementById('btn-pwa');
+
+        // Si ya se abrió como app instalada, el botón de instalar no hace falta
+        if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+            btnPwa.classList.add('hidden');
+        }
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
