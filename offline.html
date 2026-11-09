@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sin conexión | Nightfall of Grimcliff</title>
-    <meta name="theme-color" content="#0b0a10">
+    <meta name="theme-color" content="#0C0A11">
     <style>
         body {
             margin: 0; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
             align-items: center; justify-content: center; gap: 1rem; padding: 1.5rem;
-            background: #0b0a10; color: #e9e2d6; text-align: center;
+            background: #0C0A11; color: #e9e2d6; text-align: center;
             font-family: Georgia, "Times New Roman", serif;
         }
         img { width: 96px; height: 96px; }
@@ -17,14 +17,16 @@
         p { max-width: 28rem; line-height: 1.6; margin: 0; }
         .acciones { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
         button {
-            background: #F4A35F; color: #0b0a10; border: 0; border-radius: .5rem;
+            background: #F4A35F; color: #0C0A11; border: 0; border-radius: .5rem;
             padding: .75rem 1.5rem; font-size: 1rem; cursor: pointer; font-family: inherit;
+            min-height: 44px;
         }
         button.sec { background: transparent; color: #F4A35F; border: 1px solid #F4A35F; }
+        button:focus-visible { outline: 3px solid #e9e2d6; outline-offset: 2px; }
     </style>
 </head>
 <body>
-    <img src="./img/icon-192.png" alt="Nightfall of Grimcliff">
+    <img src="./img/icon-192.png" alt="Nightfall of Grimcliff" width="96" height="96">
     <h1>Sin conexión</h1>
     <p>No hay internet y esta página no se guardó en tu dispositivo. Vuelve a conectarte para seguir la travesía por Grimcliff.</p>
     <p lang="en"><em>You are offline and this page was not saved on your device.</em></p>
@@ -33,8 +35,9 @@
         <button type="button" class="sec" onclick="location.href='./index.html'">Ir al inicio</button>
     </div>
     <script>
-        // Al volver la conexión, regresa solo al sitio
-        addEventListener('online', () => { location.href = './index.html'; });
+        // Al volver la conexión, recarga la MISMA página que el usuario quería abrir
+        // (esta respuesta se sirve en la URL original, así que reload() vuelve a pedirla)
+        addEventListener('online', () => location.reload());
     </script>
 </body>
 </html>

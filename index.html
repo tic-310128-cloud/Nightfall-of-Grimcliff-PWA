@@ -248,20 +248,28 @@
                         </div>
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
-                            <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo de viajero (inicio)" data-media="./img/kaelen_viajero.webp">Atuendo de viajero (inicio)</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Armadura arcana (Héroe de la Luz)" data-media="./img/kaelen_armadura.webp">Armadura arcana (Héroe de la Luz)</button>
+                            <div class="vest-par mt-1">
+                                <button type="button" class="chip chip-sel v-naranja" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo de viajero (inicio)" data-media="./img/kaelen_viajero.webp">Atuendo de viajero (inicio)</button>
+                                <button type="button" class="chip chip-sel v-morado" aria-pressed="false" data-tipo="vestuario" data-nombre="Armadura arcana (Héroe de la Luz)" data-media="./img/kaelen_armadura.webp">Armadura arcana (Héroe de la Luz)</button>
                             </div>
                         </div>
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
-                            <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Movimiento" data-media="./img/kaelen_movimiento.webp">Movimiento</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Salto" data-media="./img/kaelen_salto.webp">Salto</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Golpear" data-media="./img/kaelen_golpear.webp">Golpear</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataque con espada" data-media="./img/kaelen_ataque.webp">Ataque con espada</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Muerte" data-media="./img/kaelen_muerte.webp">Muerte</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataque potenciado con Alborada" data-media="./img/kaelen_potenciado.webp">Ataque potenciado con Alborada</button>
+                            <div class="space-y-3 mt-1">
+                                <!-- Fila 1: Viajero -->
+                                <div class="flex flex-wrap gap-3">
+                                    <button type="button" class="chip chip-sel g-viajero" aria-pressed="false" data-tipo="sprite" data-nombre="En reposo" data-grupo="Viajero" data-grupo-en="Traveler" data-media="./img/kaelen_viajero_reposo.webp">En reposo</button>
+                                    <button type="button" class="chip chip-sel g-viajero" aria-pressed="false" data-tipo="sprite" data-nombre="Carrera" data-grupo="Viajero" data-grupo-en="Traveler" data-media="./img/kaelen_viajero_carrera.webp">Carrera</button>
+                                    <button type="button" class="chip chip-sel g-viajero" aria-pressed="false" data-tipo="sprite" data-nombre="Salto" data-grupo="Viajero" data-grupo-en="Traveler" data-media="./img/kaelen_viajero_salto.webp">Salto</button>
+                                    <button type="button" class="chip chip-sel g-viajero" aria-pressed="false" data-tipo="sprite" data-nombre="Caída" data-grupo="Viajero" data-grupo-en="Traveler" data-media="./img/kaelen_viajero_caida.webp">Caída</button>
+                                </div>
+                                <!-- Fila 2: Héroe de la Luz (En guardia queda junto a Golpe potente) -->
+                                <div class="flex flex-wrap gap-3">
+                                    <button type="button" class="chip chip-sel g-heroe" aria-pressed="false" data-tipo="sprite" data-nombre="En guardia" data-grupo="Héroe de la Luz" data-grupo-en="Hero of Light" data-media="./img/kaelen_heroe_guardia.webp">En guardia</button>
+                                    <button type="button" class="chip chip-sel g-heroe" aria-pressed="false" data-tipo="sprite" data-nombre="Carrera" data-grupo="Héroe de la Luz" data-grupo-en="Hero of Light" data-media="./img/kaelen_heroe_carrera.webp">Carrera</button>
+                                    <button type="button" class="chip chip-sel g-heroe" aria-pressed="false" data-tipo="sprite" data-nombre="Esquiva" data-grupo="Héroe de la Luz" data-grupo-en="Hero of Light" data-media="./img/kaelen_heroe_esquiva.webp">Esquiva</button>
+                                    <button type="button" class="chip chip-sel g-heroe" aria-pressed="false" data-tipo="sprite" data-nombre="Golpe potente" data-grupo="Héroe de la Luz" data-grupo-en="Hero of Light" data-media="./img/kaelen_heroe_golpe.webp">Golpe potente</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -296,18 +304,26 @@
                         </div>
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Vestuarios (toca uno para verlo)</span>
-                            <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo real (antes de la corrupción)" data-media="./img/malakor_real.webp">Atuendo real (antes de la corrupción)</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="vestuario" data-nombre="Forma final alada (corrupción)" data-media="./img/malakor_alado.webp">Forma final alada (corrupción)</button>
+                            <div class="vest-par mt-1">
+                                <button type="button" class="chip chip-sel v-naranja" aria-pressed="false" data-tipo="vestuario" data-nombre="Atuendo real (antes de la corrupción)" data-media="./img/malakor_real.webp">Atuendo real (antes de la corrupción)</button>
+                                <button type="button" class="chip chip-sel v-morado" aria-pressed="false" data-tipo="vestuario" data-nombre="Forma final alada (corrupción)" data-media="./img/malakor_alado.webp">Forma final alada (corrupción)</button>
                             </div>
                         </div>
                         <div>
                             <span class="font-medieval text-base-content/70 text-sm">Animaciones y sprites (toca una para verla)</span>
-                            <div class="flex flex-wrap gap-3 mt-1">
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ataques con mandoble" data-media="./img/malakor_mandoble.webp">Ataques con mandoble</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Ondas de choque" data-media="./img/malakor_ondas.webp">Ondas de choque (Volar)</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Garras y magia oscura" data-media="./img/malakor_garras.webp">Garras y magia oscura</button>
-                                <button type="button" class="chip chip-sel" aria-pressed="false" data-tipo="animacion" data-nombre="Derrota (golpe final de Alborada)" data-media="./img/malakor_derrota.webp">Derrota (golpe final de Alborada)</button>
+                            <div class="space-y-3 mt-1">
+                                <div class="flex flex-wrap gap-3">
+                                    <button type="button" class="chip chip-sel g-rey" aria-pressed="false" data-tipo="sprite" data-nombre="En guardia" data-grupo="Rey guerrero" data-grupo-en="Warrior king" data-media="./img/malakor_rey_guardia.webp">En guardia</button>
+                                    <button type="button" class="chip chip-sel g-rey" aria-pressed="false" data-tipo="sprite" data-nombre="Avance" data-grupo="Rey guerrero" data-grupo-en="Warrior king" data-media="./img/malakor_rey_avance.webp">Avance</button>
+                                    <button type="button" class="chip chip-sel g-rey" aria-pressed="false" data-tipo="sprite" data-nombre="Espadazo" data-grupo="Rey guerrero" data-grupo-en="Warrior king" data-media="./img/malakor_rey_espadazo.webp">Espadazo</button>
+                                    <button type="button" class="chip chip-sel g-rey" aria-pressed="false" data-tipo="sprite" data-nombre="Segundo corte" data-grupo="Rey guerrero" data-grupo-en="Warrior king" data-media="./img/malakor_rey_corte.webp">Segundo corte</button>
+                                </div>
+                                <div class="flex flex-wrap gap-3">
+                                    <button type="button" class="chip chip-sel g-alado" aria-pressed="false" data-tipo="sprite" data-nombre="Aleteo" data-grupo="Forma alada" data-grupo-en="Winged form" data-media="./img/malakor_alado_aleteo.webp">Aleteo</button>
+                                    <button type="button" class="chip chip-sel g-alado" aria-pressed="false" data-tipo="sprite" data-nombre="Alas abiertas" data-grupo="Forma alada" data-grupo-en="Winged form" data-media="./img/malakor_alado_alas.webp">Alas abiertas</button>
+                                    <button type="button" class="chip chip-sel g-alado" aria-pressed="false" data-tipo="sprite" data-nombre="Zarpazo" data-grupo="Forma alada" data-grupo-en="Winged form" data-media="./img/malakor_alado_zarpazo.webp">Zarpazo</button>
+                                    <button type="button" class="chip chip-sel g-alado" aria-pressed="false" data-tipo="sprite" data-nombre="Picado" data-grupo="Forma alada" data-grupo-en="Winged form" data-media="./img/malakor_alado_picado.webp">Picado</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -562,14 +578,15 @@
 
                         <div class="grid lg:grid-cols-5 gap-8 items-stretch">
 
-                            <div class="lg:col-span-3 bg-base-300/60 rounded-box p-4 sm:p-8 flex flex-wrap justify-center items-end gap-x-14 gap-y-10">
+
+                            <div class="controles-grupos lg:col-span-3 bg-base-300/60 rounded-box p-4 sm:p-8">
                                 <div class="space-y-4">
                                     <span class="font-medieval text-xs text-base-content/70 block">Movimiento</span>
                                     <div class="flex flex-wrap gap-4">
                                         <button type="button" class="tecla tecla-media" data-key="a,d,arrowleft,arrowright" data-label="A / D · ←/→" data-titulo="Caminar" data-desc="Desplazamiento lateral hacia la izquierda y la derecha." data-titulo-en="Walk" data-desc-en="Lateral movement to the left and right."><span>A / D · ←/→</span><small>Caminar</small></button>
                                         <button type="button" class="tecla tecla-ancha" data-key=" " data-label="Espacio" data-label-en="Space" data-titulo="Saltar" data-desc="Para superar troncos, raíces y plataformas." data-titulo-en="Jump" data-desc-en="To clear logs, roots and platforms."><span>Espacio</span><small>Saltar</small></button>
-                                        <button type="button" class="tecla" data-key="s" data-label="S" data-titulo="Sigilo" data-desc="Avance lento y agachado." data-titulo-en="Stealth" data-desc-en="Slow, crouched advance."><span>S</span><small>Sigilo</small></button>
                                         <button type="button" class="tecla tecla-media" data-key="shift" data-label="Shift" data-titulo="Esquivar" data-desc="Movimiento rápido con breve inmunidad." data-titulo-en="Dodge" data-desc-en="A quick move with brief invulnerability."><span>Shift</span><small>Esquivar</small></button>
+                                        <button type="button" class="tecla" data-key="s" data-label="S" data-titulo="Sigilo" data-desc="Avance lento y agachado." data-titulo-en="Stealth" data-desc-en="Slow, crouched advance."><span>S</span><small>Sigilo</small></button>
                                     </div>
                                 </div>
 
@@ -595,12 +612,13 @@
 
                             </div>
 
-                        <!-- Detalle de la tecla elegida -->
+                            <!-- Detalle de la tecla elegida -->
                         <div class="lg:col-span-2 bg-base-300 rounded-box p-6 sm:p-8 text-center space-y-6 min-h-[16rem] flex flex-col items-center justify-center">
                             <span id="det-tecla" data-no-i18n class="tecla activa pointer-events-none tecla-media max-w-full" style="height:6.5rem;font-size:2.1rem;padding:0 1.5rem">A</span>
                             <h4 id="det-titulo" data-no-i18n class="font-medieval text-3xl md:text-4xl text-primary font-bold">Movimiento</h4>
                             <p id="det-desc" data-no-i18n class="text-xl md:text-2xl leading-relaxed">Desplazamiento lateral.</p>
                         </div>
+
                         </div>
                     </div>
 
@@ -608,12 +626,12 @@
                     <div data-panel="1" class="hidden space-y-5">
                         <h3 class="tarjeta-titulo cabecera">Vida y HUD</h3>
                         <p class="text-lg md:text-xl leading-relaxed">Barra de vida, contador de elixires, indicador de nivel y de zona, y barra de vida del jefe en el combate final. Con Alborada se suma la barra de carga del ataque potenciado.</p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="chip">Barra de vida</span>
-                            <span class="chip">Contador de elixires</span>
-                            <span class="chip">Nivel y zona</span>
-                            <span class="chip">Vida del jefe</span>
-                            <span class="chip">Carga de Alborada</span>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-lg">
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Barra de vida</strong><span class="item-desc">Muestra tu salud y baja al recibir daño.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Contador de elixires</strong><span class="item-desc">Cuántos elixires de Elara te quedan para recuperar salud.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Nivel y zona</strong><span class="item-desc">Indica en qué nivel y zona del recorrido te encuentras.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Vida del jefe</strong><span class="item-desc">Aparece en el combate final contra Malakor.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Carga de Alborada</strong><span class="item-desc">Con la espada en tu poder, muestra la carga del ataque potenciado.</span></div>
                         </div>
                     </div>
 
@@ -650,28 +668,25 @@
                     <!-- 5. Enemigos -->
                     <div data-panel="5" class="hidden space-y-5">
                         <h3 class="tarjeta-titulo cabecera">Enemigos y escenarios</h3>
-                        <div class="grid md:grid-cols-2 gap-6 text-lg">
-                            <div class="space-y-2">
-                                <strong class="font-medieval text-primary">Enemigos</strong>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="chip">Engendros del bosque</span>
-                                    <span class="chip">Guardias con lanza o escudo</span>
-                                    <span class="chip">Enemigos a distancia</span>
-                                    <span class="chip">Esbirros de sombra</span>
-                                    <span class="chip">Malakor</span>
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <strong class="font-medieval text-primary">Obstáculos</strong>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="chip">Estacas</span>
-                                    <span class="chip">Lodo</span>
-                                    <span class="chip">Barreras mágicas</span>
-                                    <span class="chip">Trampas de fuego (marcadas en rojo)</span>
-                                    <span class="chip">Columnas que caen</span>
-                                    <span class="chip">Ondas de choque</span>
-                                </div>
-                            </div>
+                        <p class="text-lg md:text-xl leading-relaxed">A lo largo de los tres niveles te enfrentarás a criaturas corruptas, a la guardia del rey y a los peligros del escenario.</p>
+
+                        <h4 class="manual-subtitulo">Enemigos</h4>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-lg">
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Engendros del bosque</strong><span class="item-desc">Criaturas corrompidas que rondan el Bosque Oscuro.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Guardias con lanza o escudo</strong><span class="item-desc">Defienden el Castillo. A los de escudo les rompes la defensa con L.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Enemigos a distancia</strong><span class="item-desc">Atacan desde lejos dentro del Castillo.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Esbirros de sombra</strong><span class="item-desc">Emergen sin cesar de los rincones durante el combate contra Malakor.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Malakor</strong><span class="item-desc">Jefe final: un combate de tres fases en el Trono de la Noche Eterna.</span></div>
+                        </div>
+
+                        <h4 class="manual-subtitulo">Obstáculos</h4>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-lg">
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Estacas</strong><span class="item-desc">Pinchos que dañan al tocarlos.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Lodo</strong><span class="item-desc">Terreno pantanoso que entorpece el avance.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Barreras mágicas</strong><span class="item-desc">Bloquean el paso; se disipan con una runa de Zephyrus (F).</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Trampas de fuego</strong><span class="item-desc">Están marcadas en rojo en el suelo: esquívalas.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Columnas que caen</strong><span class="item-desc">Se derrumban en la sala del trono mientras avanza el combate.</span></div>
+                            <div class="vidrio vidrio-hover rounded-xl p-4"><strong class="item-titulo">Ondas de choque</strong><span class="item-desc">Ataque de Malakor que agrieta los muros; esquívalo con Shift.</span></div>
                         </div>
                     </div>
                 </div>
@@ -936,7 +951,7 @@
 
     <!-- ========= TRADUCCIÓN ES / ENG (archivo externo) ========= -->
     <!-- Sube el número ?v= cuando cambies traduccion.js (y igualo en sw.js) -->
-    <script src="./js/traduccion.js?v=6"></script>
+    <script src="./js/traduccion.js?v=7"></script>
 
     <!-- ========= IDIOMA DEL DOCUMENTO (accesibilidad) ========= -->
     <script>
@@ -1016,9 +1031,14 @@
 
             // Escribe el tipo (Vestuario / Animación) y el nombre, en el idioma actual
             function rotular(chip) {
-                const esVest = chip.dataset.tipo === 'vestuario';
-                tipo.textContent = esVest ? (enIng() ? 'Outfit' : 'Vestuario') : (enIng() ? 'Animation' : 'Animación');
-                nombre.textContent = chip.dataset.nombre ? chip.textContent.trim() : nombreBase;
+                const t = chip.dataset.tipo;
+                tipo.textContent = t === 'vestuario' ? (enIng() ? 'Outfit' : 'Vestuario')
+                                 : t === 'sprite' ? 'Sprite'
+                                 : (enIng() ? 'Animation' : 'Animación');
+                // Los sprites muestran también su grupo (p. ej. "Viajero · Carrera")
+                const gr = enIng() ? chip.dataset.grupoEn : chip.dataset.grupo;
+                const etiqueta = gr ? gr + ' · ' : '';
+                nombre.textContent = chip.dataset.nombre ? etiqueta + chip.textContent.trim() : nombreBase;
             }
 
             function elegir(chip) {

@@ -450,3 +450,150 @@ header, main {
 @media (min-width: 1024px) {
   body { font-size: 1.2rem; }
 }
+
+
+/* ---------- CARRUSEL DE PERSONAJES: aprovechar el tamaño del contenedor (computadora) ----------
+   Van fuera de @layer para ganar a las utilidades de Tailwind (lg:w-4/12, text-lg, etc.). */
+@media (min-width: 1024px) {
+  .carousel .carousel-item { padding-inline: 4rem; gap: 3rem; }
+  .carousel .carousel-item > div:nth-child(1) { width: 42%; align-self: stretch; display: flex; }   /* visor: ocupa todo el alto */
+  .carousel .carousel-item > div:nth-child(2) { width: 58%; }                                       /* texto */
+  .carousel .visor { height: auto; min-height: 36rem; flex: 1; }
+  .carousel .carousel-item h3 { font-size: 2.4rem; line-height: 1.15; }
+  .carousel .carousel-item h3 + p { font-size: 1.1rem; line-height: 1.5; }
+  .carousel .carousel-item p.leading-relaxed { font-size: 1.3rem; line-height: 1.7; }
+  .carousel .carousel-item .space-y-5 > div > span.font-medieval { font-size: 1rem; }
+  .carousel .chip-sel { font-size: 1rem; padding: .5rem 1rem; }
+  .carousel .leyenda-npc { font-size: 1.2rem; }
+}
+
+
+/* ---------- SPRITES DEL CARRUSEL: borde de color según el grupo ---------- */
+.g-viajero { --g: #6A6078; }
+.g-heroe   { --g: #F4A35F; }
+.g-rey     { --g: #6A6078; }
+.g-alado   { --g: #F4A35F; }
+.chip-sel.g-viajero, .chip-sel.g-heroe, .chip-sel.g-rey, .chip-sel.g-alado { border: 2px solid var(--g); }
+
+/* Al seleccionarlo, el sprite se rellena con el color de su grupo */
+.chip-sel.g-viajero[aria-pressed="true"],
+.chip-sel.g-rey[aria-pressed="true"] {
+  background: #6A6078;
+  border-color: #6A6078;
+  color: #E9E2D6;
+}
+.chip-sel.g-heroe[aria-pressed="true"],
+.chip-sel.g-alado[aria-pressed="true"] {
+  background: #F4A35F;
+  border-color: #F4A35F;
+  color: #0C0A11;
+}
+
+
+/* ---------- VESTUARIOS: dos botones lado a lado, borde de color propio ---------- */
+.vest-par { display: flex; flex-wrap: wrap; gap: .75rem; }
+@media (min-width: 640px) {
+  .vest-par { flex-wrap: nowrap; }
+  .vest-par .chip-sel { flex: 1 1 0; min-width: 0; line-height: 1.25; }
+}
+
+.chip-sel.v-naranja { border: 2px solid var(--color-primary); }
+.chip-sel.v-morado  { border: 2px solid #8B6CC9; }
+
+/* Al seleccionarlo, el relleno es #6A6078 (el borde sigue morado #8B6CC9) */
+.chip-sel.v-morado[aria-pressed="true"] {
+  background: #6A6078;
+  border-color: #8B6CC9;
+  color: #E9E2D6;
+}
+
+
+/* ---------- FICHAS DE PERSONAJES: más aire y orden ----------
+   Columna de texto como flex con separación fija, y una línea sutil
+   entre Descripción, Vestuarios y Sprites. El HTML no cambia. */
+.carousel .carousel-item > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.carousel .carousel-item > div:nth-child(2) > * { margin-block: 0; }   /* anula el space-y-5 de Tailwind */
+
+/* Título + resumen: separados un poco y resumen más tenue */
+.carousel .carousel-item > div:nth-child(2) > div:first-child h3 + p {
+  margin-top: .5rem;
+  color: color-mix(in oklab, var(--color-base-content) 65%, transparent);
+}
+
+/* Bloques: Descripción / Vestuarios / Sprites, con línea divisoria */
+.carousel .carousel-item > div:nth-child(2) > div:nth-child(n+3) {
+  padding-top: 1.5rem;
+  border-top: 1px solid color-mix(in oklab, var(--color-base-300) 70%, transparent);
+}
+
+/* Rótulo de cada bloque */
+.carousel .carousel-item > div:nth-child(2) > div > span.font-medieval {
+  display: block;
+  margin-bottom: .6rem;
+  letter-spacing: .04em;
+}
+
+/* Botones de sprites: filas más separadas entre grupos */
+.carousel .carousel-item .space-y-3 { display: flex; flex-direction: column; gap: .75rem; }
+.carousel .carousel-item .space-y-3 > * { margin-block: 0; }
+.carousel .carousel-item .flex-wrap.gap-3 { gap: .6rem; }
+
+
+/* ---------- VESTUARIOS DE LOS NPC: texto alineado a la izquierda ---------- */
+.carousel .chip-sel[data-tipo="vestuario"]:not(.v-naranja):not(.v-morado) {
+  text-align: left;
+  line-height: 1.4;
+}
+
+
+/* ---------- MANUAL: CONTROLES ----------
+   Panel de teclas (izquierda): tres grupos apilados, rótulo con línea y teclas
+   en una cuadrícula de 6 columnas alineada a la izquierda. */
+.controles-grupos { display: flex; flex-direction: column; gap: 1.75rem; }
+.controles-grupos > div { display: flex; flex-direction: column; gap: 1rem; }
+.controles-grupos > div > * { margin-block: 0; }          /* anula el space-y-4 de Tailwind */
+.controles-grupos > div > span {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  font-size: .95rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+.controles-grupos > div > span::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--brillo) 55%, transparent), transparent);
+}
+
+/* Cada fila ocupa todo el ancho y sus teclas se reparten por igual */
+.controles-grupos .flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+}
+.controles-grupos .tecla {
+  flex: 1 1 6rem;          /* crecen para llenar la fila; si no caben, bajan de línea */
+  width: auto;
+  min-width: 0;
+  height: 4.25rem;
+}
+.controles-grupos .tecla small { font-size: .72rem; }
+
+
+/* ---------- MANUAL: ENEMIGOS Y OBSTÁCULOS ---------- */
+.manual-subtitulo {
+  font-family: var(--font-medieval, "MedievalSharp", serif);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: .04em;
+  color: var(--color-primary);
+  padding-bottom: .5rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--brillo) 30%, transparent);
+}
