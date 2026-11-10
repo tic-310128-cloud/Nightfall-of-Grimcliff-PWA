@@ -1,18 +1,18 @@
 // ===== Service Worker (PWA) =====
 
-// 1. Versión del caché (súbela cada vez que cambie ARCHIVOS o algún archivo local)
+// 1. Versión del caché 
 const CACHE = 'grimcliff-v22';
 
 // Segundos que se espera a la red antes de usar lo guardado (si ya existe en caché)
 const TIEMPO_RED = 4000;
 
-// 2. Archivos locales obligatorios (si falta alguno, el service worker no se instala)
+// 2. Obligatorios: si falta alguno, el service worker no se instala
 const ARCHIVOS = [
     './',
     './index.html',
     './offline.html',
     './css/tema.css',
-    './js/traduccion.js?v=7',   // debe coincidir con el <script> de index.html
+    './js/traduccion.js?v=8',   
     './img/baner_pro_1.webp',
     './img/Logo_2.webp',
     './img/icon-192.png',
@@ -23,7 +23,7 @@ const ARCHIVOS = [
     './manifest.webmanifest'
 ];
 
-// 3. Locales opcionales (imágenes de niveles, vestuarios, sprites y app): si alguno falta, no rompe la instalación
+// 3. Opcionales: si falta alguno, no pasa nada
 const OPCIONALES = [
     './img/icon-512-maskable.png',
     './img/app_inicio.webp',
@@ -59,21 +59,20 @@ const OPCIONALES = [
     './img/zephyrus_tunica.webp'
 ];
 
-// 4. Externos (CDN y fuentes). Se piden con CORS para obtener respuestas normales (no "opaque").
-//    Las etiquetas <link>/<script> de index.html deben llevar crossorigin="anonymous".
+// 4. Externos (CDN y fuentes), pedidos con CORS
 const EXTERNOS = [
     'https://cdn.jsdelivr.net/npm/daisyui@5',
     'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
     'https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=MedievalSharp&family=Cormorant:wght@400;500;600;700&display=swap'
 ];
 
-// Orígenes externos cuyo contenido SÍ se guarda al navegar (evita llenar el caché con cualquier cosa)
+// Únicos dominios externos que se guardan en caché
 const HOSTS_PERMITIDOS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
-// "reload" salta el caché HTTP del navegador para no precachear versiones viejas
+// "reload" evita guardar versiones viejas del caché del navegador
 const pedir = (u, extra = {}) => new Request(u, { cache: 'reload', ...extra });
 
-// 5. Instalación: guarda los archivos en el caché
+// 5. Instalación: guarda los archivos
 self.addEventListener('install', (e) => {
     self.skipWaiting();
     e.waitUntil(
@@ -94,13 +93,13 @@ self.addEventListener('activate', (e) => {
     );
 });
 
-// 7. Peticiones: red primero (con tiempo límite); si falla o tarda, caché; si no hay, página offline
+// 7. Peticiones: red primero; si falla o tarda, caché; si no hay, offline.html
 self.addEventListener('fetch', (e) => {
     const req = e.request;
     if (req.method !== 'GET') return;
 
     const url = new URL(req.url);
-    if (!url.protocol.startsWith('http')) return;                         // ignora chrome-extension:// etc.
+    if (!url.protocol.startsWith('http')) return;                         
     if (/\.(apk|mp4|webm)$/i.test(url.pathname) || req.headers.has('range')) return;   // APK, videos y Range
     // Solo se gestiona el mismo origen y los CDN conocidos; lo demás pasa directo a la red
     if (url.origin !== self.location.origin && !HOSTS_PERMITIDOS.includes(url.hostname)) return;
@@ -116,8 +115,7 @@ self.addEventListener('fetch', (e) => {
             }
             return resp;
         });
-        // waitUntil se llama de forma síncrona (antes de responder): mantiene vivo el SW
-        // hasta que termine el guardado, incluso si ya se respondió con el caché.
+        // Mantiene vivo el SW hasta terminar de guardar
         e.waitUntil(red.catch(() => {}));
 
         const lenta = new Promise((res) => setTimeout(() => res(null), TIEMPO_RED));
@@ -125,7 +123,7 @@ self.addEventListener('fetch', (e) => {
         try {
             const resp = await Promise.race([red, lenta]);
             if (resp) return resp;                    // la red respondió a tiempo
-            return (await guardado()) || await red;   // red lenta: usa el caché; si no hay, sigue esperando la red
+            return (await guardado()) || await red;   // red lenta: caché, o esperar a la red
         } catch (err) {
             const copia = await guardado();
             if (copia) return copia;

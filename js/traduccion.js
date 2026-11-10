@@ -5,6 +5,8 @@
 // Para traducir más texto, solo agrega una línea nueva a esta lista.
 // Si cambias un texto del index.html, cambia también su línea aquí
 // (si no coincide, esa parte simplemente se queda en español).
+// Los textos de las teclas del Manual (descripción larga) viajan en el propio HTML:
+// data-titulo-en, data-desc-en y data-label-en.
 
 // ---------- 1. LISTA DE TRADUCCIONES ----------
 const EN = [
@@ -39,7 +41,7 @@ const EN = [
     ["Descripción:", "Description:"], ["Descripción", "Description"],
     ["Vestuarios (toca", "Outfits (tap one to view it)"],
     ["Animaciones y sprites (toca", "Animations and sprites (tap one to view it)"],
-    ["Vestuarios", "Outfits"], ["Imágenes y animaciones", "Images and animations"], ["Icono", "Icon"],
+    ["Vestuarios", "Outfits"],
     ["=Malakor el Corrupto", "Malakor the Corrupt"],
 
     // --- NPC sin sprites (Thorne, Kogan, Zephyrus y Elara) ---
@@ -57,15 +59,20 @@ const EN = [
     ["Video de Zephyrus", "Video of Zephyrus"],
     ["Video de Elara", "Video of Elara"],
 
+    // --- Sprites de Kaelen (Viajero y Héroe de la Luz) y de Malakor (Rey guerrero y Forma alada) ---
+    // El nombre del grupo ("Viajero · Carrera") lo traduce el visor con data-grupo-en.
+    ["=En reposo", "Idle"], ["=Carrera", "Run"], ["=Salto", "Jump"], ["=Caída", "Fall"],
+    ["=En guardia", "On guard"], ["=Esquiva", "Dodge"], ["=Golpe potente", "Heavy strike"],
+    ["=Avance", "Advance"], ["=Espadazo", "Sword slash"], ["=Segundo corte", "Second slash"],
+    ["=Aleteo", "Flapping"], ["=Alas abiertas", "Wings spread"],
+    ["=Zarpazo", "Claw swipe"], ["=Picado", "Dive"],
+
     // --- Personaje: Kaelen ---
     ["Kaelen — El Caballero del Amanecer", "Kaelen — The Knight of Dawn"],
     ["Protagonista y héroe controlado", "Protagonist and player-controlled hero. Knight of Dawn; after receiving Alborada, the Hero of Light."],
     ["Huérfano que creció", "An orphan raised in the suburbs of the capital who became a bounty hunter. He retired to a remote village to live in peace with his family, but Malakor's campaign razed his home. As the sole survivor, he takes up arms again, driven by a thirst for justice."],
     ["Atuendo de viajero (inicio)", "Traveler's outfit (start)"],
     ["Armadura arcana (Héroe", "Arcane armor (Hero of Light)"],
-    ["Ataque con espada", "Sword attack"],
-    ["Ataque potenciado con Alborada", "Alborada-powered attack"],
-    ["=Golpear", "Hit"], ["=Muerte", "Death"],
 
     // --- Personaje: Malakor ---
     ["Malakor — Rey tirano", "Malakor — Tyrant King"],
@@ -73,46 +80,30 @@ const EN = [
     ["Monarca que gobernó", "A monarch who ruled with benevolence for decades, but paranoia, the isolation of power and the fear of old age and death corrupted him. He sealed a pact with beings of shadow that plunged the kingdom into eternal night."],
     ["Atuendo real", "Royal attire (before the corruption)"],
     ["Forma final alada", "Final winged form (corruption)"],
-    ["Ataques con mandoble", "Greatsword attacks"],
-    ["Ondas de choque (Volar)", "Shockwaves (Fly)"],
-    ["Invocación de esbirros", "Summoning minions"],
-    ["Garras y magia oscura", "Claws and dark magic"],
-    ["Derrota (golpe final", "Defeat (Alborada's final blow)"],
 
     // --- Personaje: Thorne ---
     ["Thorne — Comandante traicionado", "Thorne — Betrayed Commander"],
     ["Aliado, comandante y mentor", "Ally, commander and combat mentor."],
     ["Antiguo comandante supremo", "Former supreme commander of Grimcliff's army, betrayed by Malakor with a suicidal ambush. He took refuge in the Dark Forest and trains Kaelen in combat."],
     ["Armadura de comandante", "Commander's armor: wine-red plates, black breastplate and teal helmet"],
-    ["Combate con espada", "Sword combat"],
-    ["Enseñanza de técnicas", "Teaching techniques"],
 
     // --- Personaje: Kogan ---
     ["Kogan — Herrero arcano", "Kogan — Arcane Blacksmith"],
     ["Aliado y herrero arcano", "Ally and arcane blacksmith; he forged the sword Alborada."],
     ["Último heredero", "Last heir of a line of arcane blacksmiths who fused metal with elemental properties. He hid as an ordinary armorer and forged the sword Alborada."],
     ["Atuendo de armero común", "Ordinary armorer's outfit: fitted red tunic, high black collar and dark gloves"],
-    ["=Forja", "Forging"],
-    ["Refuerzo de la armadura", "Armor reinforcement"],
-    ["Entrega de la espada", "Handing over the sword"],
 
     // --- Personaje: Zephyrus ---
     ["Zephyrus — Mago exiliado", "Zephyrus — Exiled Mage"],
     ["Aliado y mago exiliado", "Ally and exiled mage."],
     ["Antiguo prodigio", "Former prodigy of the Imperial Academy, banished for warning of the catastrophe the king's pact would bring."],
     ["Túnica de mago exiliado", "Exiled mage's robe: gray and violet with golden runes, hood and staff"],
-    ["Conjuros de repulsión", "Repulsion spells"],
-    ["Grabado de runas protectoras", "Engraving protective runes"],
-    ["Disipación de niebla y barreras", "Dispelling fog and barriers"],
 
     // --- Personaje: Elara ---
     ["Elara — Sanadora", "Elara — Healer"],
     ["Aliada y sanadora", "Ally and healer."],
     ["Antigua sanadora real", "Former royal healer who led a humanitarian team and fled the castle to secretly heal the kingdom's survivors."],
     ["Atuendo de sanadora errante", "Wandering healer's outfit: dark gray with blue details and combat boots"],
-    ["Canalización de vitalidad", "Channeling vitality"],
-    ["Medicina botánica arcana", "Arcane botanical medicine"],
-    ["Entrega de elixires y ungüentos", "Delivering elixirs and ointments"],
 
     // --- Mundos y niveles ---
     ["El recorrido es lineal", "The route is linear, from west to east: the first level teaches, the second challenges and the third tests everything you have learned."],
@@ -174,23 +165,28 @@ const EN = [
     ["Héroe de la Luz", "Hero of Light"],
     ["Reconocimiento por completar", "Recognition for completing the adventure and restoring the dawn."],
 
-    // --- Manual: títulos, pestañas y teclado ---
+    // --- Manual: títulos, pestañas y controles ---
     ["Es un juego de acción", "It is a 2D action platformer with a side view and a linear route through three levels: you advance in order and cannot return to previous zones. The Dark Forest works as a tutorial and teaches each mechanic by zone; the Castle challenges you with combat and exploration; and the Throne of Eternal Night tests everything you have learned against Malakor."],
     ["=Controles", "Controls"], ["=Interfaz", "Interface"], ["=Combate", "Combat"],
     ["=Ítems", "Items"], ["=Enemigos", "Enemies"],
     ["Controles (PC)", "Controls (PC)"],
     ["Toca una tecla", "Tap a key or press it on your keyboard to see what it does."],
     ["=Movimiento", "Movement"], ["=Acciones", "Actions"],
-    ["=Sigilo", "Stealth"], ["=Izquierda", "Left"], ["=Derecha", "Right"],
-    ["=Esquiva", "Dodge"], ["=Salto", "Jump"], ["Espacio", "Space"],
-    ["=Ataque", "Attack"], ["=Guardia", "Guard"], ["=Potenciado", "Powered"], ["=Hablar", "Talk"],
+    // Teclas: etiqueta pequeña bajo cada tecla (el detalle largo va en el HTML)
+    ["=Caminar", "Walk"], ["=Saltar", "Jump"], ["=Sigilo", "Stealth"], ["=Esquivar", "Dodge"],
+    ["=Atacar / cargar", "Attack / charge"], ["=Guardia", "Guard"], ["=Romper defensa", "Break guard"],
+    ["=Hablar / abrir", "Talk / open"], ["=Usar elixir", "Use elixir"], ["=Activar runa", "Activate rune"],
+    ["=Abrir mapa", "Open map"], ["=Sonido", "Sound"],
+    ["Espacio", "Space"], ["=J / clic izq.", "J / left click"], ["=C / rueda", "C / wheel"],
 
     // --- Manual: interfaz ---
     ["Vida y HUD", "Health and HUD"],
     ["Barra de vida, contador", "Health bar, elixir counter, level and zone indicators, and the boss health bar in the final battle. With Alborada, the powered-attack charge bar is added."],
-    ["=Barra de vida", "Health bar"], ["=Contador de elixires", "Elixir counter"],
-    ["=Nivel y zona", "Level and zone"], ["=Vida del jefe", "Boss health"],
-    ["=Carga de Alborada", "Alborada charge"],
+    ["=Barra de vida", "Health bar"], ["Muestra tu salud", "Shows your health and drops when you take damage."],
+    ["=Contador de elixires", "Elixir counter"], ["Cuántos elixires de Elara", "How many of Elara's elixirs you have left to restore health."],
+    ["=Nivel y zona", "Level and zone"], ["Indica en qué nivel y zona", "Shows which level and zone of the route you are in."],
+    ["=Vida del jefe", "Boss health"], ["Aparece en el combate final", "Appears in the final battle against Malakor."],
+    ["=Carga de Alborada", "Alborada charge"], ["Con la espada en tu poder", "With the sword in your hands, shows the powered-attack charge."],
 
     // --- Manual: transformación ---
     ["Transformación", "Transformation"],
@@ -214,31 +210,27 @@ const EN = [
 
     // --- Manual: enemigos y obstáculos ---
     ["Enemigos y escenarios", "Enemies and environments"],
+    ["A lo largo de los tres niveles", "Across the three levels you will face corrupted creatures, the king's guard and the dangers of the environment."],
     ["=Obstáculos", "Obstacles"],
-    ["=Engendros del bosque", "Forest spawn"], ["=Guardias con lanza o escudo", "Guards with spear or shield"],
-    ["=Enemigos a distancia", "Ranged enemies"], ["=Esbirros de sombra", "Shadow minions"],
-    ["=Estacas", "Stakes"], ["=Lodo", "Mud"], ["=Barreras mágicas", "Magical barriers"],
-    ["=Trampas de fuego (marcadas en rojo)", "Fire traps (marked in red)"],
-    ["=Columnas que caen", "Falling columns"], ["=Ondas de choque", "Shockwaves"],
+    ["=Engendros del bosque", "Forest spawn"], ["Criaturas corrompidas que rondan", "Corrupted creatures that roam the Dark Forest."],
+    ["=Guardias con lanza o escudo", "Guards with spear or shield"], ["Defienden el Castillo", "They defend the Castle. You break the shielded ones' defense with L."],
+    ["=Enemigos a distancia", "Ranged enemies"], ["Atacan desde lejos", "They attack from afar inside the Castle."],
+    ["=Esbirros de sombra", "Shadow minions"], ["Emergen sin cesar", "They keep emerging from the corners during the fight against Malakor."],
+    ["Jefe final: un combate", "Final boss: a three-phase battle in the Throne of Eternal Night."],
+    ["=Estacas", "Stakes"], ["Pinchos que dañan", "Spikes that hurt on contact."],
+    ["=Lodo", "Mud"], ["Terreno pantanoso", "Swampy ground that slows your advance."],
+    ["=Barreras mágicas", "Magical barriers"], ["Bloquean el paso", "They block the way; dispel them with a Zephyrus rune (F)."],
+    ["=Trampas de fuego", "Fire traps"], ["Están marcadas en rojo", "They are marked in red on the ground: dodge them."],
+    ["=Columnas que caen", "Falling columns"], ["Se derrumban en la sala", "They collapse in the throne room as the battle goes on."],
+    ["=Ondas de choque", "Shockwaves"], ["Ataque de Malakor que agrieta", "A Malakor attack that cracks the walls; dodge it with Shift."],
 
     // --- Descargar ---
     ["Descargar", "Download"],
     ["La app complementaria", "The Nightfall of Grimcliff companion app: check your score, meet the characters, compete in the ranking and connect with the community."],
-    ["PUNTAJE", "SCORE"],
-    ["Mejores Jugadores", "Top Players"],
-    ["1. Jugador1", "1. Player1"], ["2. Jugador2", "2. Player2"], ["3. Jugador3", "3. Player3"],
-    ["4. Jugador4", "4. Player4"], ["5. Jugador5", "5. Player5"],
-    ["Descubre la oscuridad", "Discover the darkness that rules Grimcliff"],
-    ["Foto del personaje", "Character photo"],
-    ["Edad: --", "Age: --"],
-    ["Puntos fuertes: --", "Strengths: --"],
-    ["Puntos débiles: --", "Weaknesses: --"],
-    ["Historia: texto provisional.", "Story: placeholder text."],
-    ["← Anterior", "← Previous"], ["Siguiente →", "Next →"],
     ["Inicio", "Home"], ["Puntaje", "Score"],
     ["Pantallas de la app móvil", "Mobile app screens."],
     ["Características", "Features"],
-    ["Crea tu cuenta", "Create your account and log in with your email."],
+    ["Crea tu cuenta e inicia", "Create your account and log in with your email."],
     ["Consulta tu puntaje", "Check your score in a dynamic chart."],
     ["Ranking con los 10", "Ranking of the top 10 highest-scoring players."],
     ["Comunidad", "Community: share tips and scores, and send suggestions."],
@@ -279,6 +271,10 @@ const EN = [
     ["Personaje siguiente", "Next character"],
     ["Logo de Nightfall", "Nightfall of Grimcliff logo"],
     ["Kaelen frente al castillo", "Kaelen in front of Grimcliff Castle"],
+    ["Pantalla de inicio de la app", "App home screen: Create account and Log in"],
+    ["Pantalla de puntaje de la app", "App score screen with power meter"],
+    ["Tabla de posiciones de la app", "App leaderboard with the top players"],
+    ["Ficha de personaje de la app", "App character sheet: Lord Malakor"],
 
     // --- Historia completa (al presionar "Continuar leyendo...") ---
     ["La tierra entera se sumió", "The entire land sank into a perpetual twilight. The sky was covered by a purplish-gray veil that blocked the sun's rays, and the grief of the villages ravaged by the king's monsters echoed in every corner like an endless echo of despair."],
